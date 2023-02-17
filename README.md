@@ -1,2 +1,3 @@
 # cs5200-anonymous-axolotl
-cs5200 Team Project
+
+Parent directory that contains our project seperated by its needed stages.
