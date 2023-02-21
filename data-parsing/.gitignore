@@ -1,3 +1,2 @@
-*.csv
-*.json
-!testdata.json
+# Ignoring because git doesn't like its size.
+ratebeer.json
