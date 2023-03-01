@@ -1,132 +1,127 @@
-CREATE DATABASE IF NOT EXISTS BeerApplication;
-USE BeerApplication;
+-- PM2 Table Creation
+CREATE SCHEMA IF NOT EXISTS BeersApp;
+USE BeersApp;
 
-DROP TABLE IF EXISTS BeerComment;
-DROP TABLE IF EXISTS BeerReview;
 DROP TABLE IF EXISTS ViewHistory;
-DROP TABLE IF EXISTS Beer;
-DROP TABLE IF EXISTS Brewer;
-DROP TABLE IF EXISTS Food;
-DROP TABLE IF EXISTS BeerStyle;
-DROP TABLE IF EXISTS User;
-DROP TABLE IF EXISTS Administrator;
-DROP TABLE IF EXISTS Person;
+DROP TABLE IF EXISTS Persons;
+DROP TABLE IF EXISTS Administrators;
+DROP TABLE IF EXISTS Users;
+DROP TABLE IF EXISTS BeerReviews;
+DROP TABLE IF EXISTS BeerComments;
+DROP TABLE IF EXISTS Brewers;
+DROP TABLE IF EXISTS BeerStyles;
+DROP TABLE IF EXISTS Beers;
+DROP TABLE IF EXISTS Foods;
 
-CREATE TABLE Person(
-    Username VARCHAR(255),
-    CONSTRAINT pk_Person_Username
-        PRIMARY KEY (Username)
+CREATE TABLE Persons (
+  UserName VARCHAR(255),
+  CONSTRAINT pk_Persons_UserName PRIMARY KEY (UserName)
 );
 
-CREATE TABLE Administrator(
-    Username VARCHAR(255),
-    CONSTRAINT pk_Administrator_Username
-        PRIMARY KEY (Username),
-    CONSTRAINT fk_Administrator_Username
-        FOREIGN KEY (Username)
-        REFERENCES Person(Username)
-        ON UPDATE CASCADE ON DELETE CASCADE
+CREATE TABLE Administrators (
+  UserName VARCHAR(255),
+  CONSTRAINT pk_Administrators_UserName
+    PRIMARY KEY (UserName),
+  CONSTRAINT fk_Administrators_UserName
+    FOREIGN KEY (UserName)
+    REFERENCES Persons(UserName)
+    ON UPDATE CASCADE ON DELETE CASCADE
 );
 
-CREATE TABLE User(
-    Username VARCHAR(255),
-    CONSTRAINT pk_User_Username
-        PRIMARY KEY (Username),
-    CONSTRAINT fk_User_Username
-        FOREIGN KEY (Username)
-        REFERENCES Person(Username)
-        ON UPDATE CASCADE ON DELETE CASCADE
+CREATE TABLE Users (
+  UserName VARCHAR(255),
+  CONSTRAINT pk_Users_UserName
+    PRIMARY KEY (UserName),
+  CONSTRAINT fk_Users_UserName
+    FOREIGN KEY (UserName)
+    REFERENCES Persons(UserName)
+    ON UPDATE CASCADE ON DELETE CASCADE
 );
 
-CREATE TABLE BeerStyle(
-    Style VARCHAR(255),
-    CONSTRAINT pk_BeerStyle_Style
-        PRIMARY KEY (Style)
+CREATE TABLE Brewers (
+  BrewerId INT,
+  CONSTRAINT pk_Brewers_BrewId
+    PRIMARY KEY (BrewerId)
 );
 
-CREATE TABLE Food(
-    FoodName VARCHAR(255),
-    Style VARCHAR(255),
-    CONSTRAINT pk_Food_FoodName
-        PRIMARY KEY (FoodName),
-    CONSTRAINT fk_Food_Style
-        FOREIGN KEY (Style)
-        REFERENCES BeerStyle(Style)
-        ON UPDATE CASCADE ON DELETE SET NULL
+CREATE TABLE BeerStyles (
+  Style VARCHAR(255),
+  CONSTRAINT pk_BeerStyles_Style
+    PRIMARY KEY (Style)
 );
 
-CREATE TABLE Brewer (
-    BrewerId INT,
-    CONSTRAINT pk_Brewer_BrewId
-        PRIMARY KEY (BrewerId)
-);
-
-CREATE TABLE Beer (
-    BeerId INT NOT NULL,
-    BeerName VARCHAR(255) NOT NULL,
-    ABV FLOAT NOT NULL,
-    Style VARCHAR(255),
-    BrewerId INT,
-    CONSTRAINT pk_Beer_BeerId
-        PRIMARY KEY (BeerId),
-    CONSTRAINT fk_Beer_BrewerId
-        FOREIGN KEY (BrewerId)
-        REFERENCES Brewer(BrewerId)
-        ON UPDATE CASCADE ON DELETE SET NULL
+CREATE TABLE Beers (
+  BeerId INT,
+  BeerName VARCHAR(255),
+  ABV FLOAT,
+  BrewerId INT,
+  Style VARCHAR(255),
+  CONSTRAINT pk_Beers_BeerId
+    PRIMARY KEY (BeerId),
+  CONSTRAINT fk_Beers_BrewerId
+    FOREIGN KEY (BrewerId)
+    REFERENCES Brewers(BrewerId)
+    ON UPDATE CASCADE ON DELETE SET NULL,
+  CONSTRAINT fk_Beers_Style
+    FOREIGN KEY (Style)
+    REFERENCES BeerStyles(Style)
+    ON UPDATE CASCADE ON DELETE CASCADE
 );
 
 CREATE TABLE ViewHistory (
-    ViewId INT AUTO_INCREMENT,
-    Created TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    Username VARCHAR(255),
-    BeerId INT,
-    CONSTRAINT pk_ViewHistory_ViewId
-        PRIMARY KEY (ViewId),
-    CONSTRAINT fk_ViewHistory_Username
-        FOREIGN KEY (Username)
-        REFERENCES Person(Username)
-        ON UPDATE CASCADE ON DELETE SET NULL,
-    CONSTRAINT fk_ViewHistory_BeerId
-        FOREIGN KEY (BeerId)
-        REFERENCES Beer(BeerId)
-        ON UPDATE CASCADE ON DELETE SET NULL
+  ViewId INT AUTO_INCREMENT,
+  Created TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  BeerId INT,
+  UserName VARCHAR(255),
+  CONSTRAINT pk_ViewHistory_ViewId
+    PRIMARY KEY (ViewId),
+  CONSTRAINT fk_ViewHistory_UserName
+    FOREIGN KEY (UserName)
+    REFERENCES Persons(UserName)
+    ON UPDATE CASCADE ON DELETE SET NULL,
+  CONSTRAINT fk_ViewHistory_BeerId
+    FOREIGN KEY (BeerId)
+    REFERENCES Beers(BeerId)
+    ON UPDATE CASCADE ON DELETE SET NULL
 );
 
-CREATE TABLE BeerReview (
-    ReviewID INT AUTO_INCREMENT,
-    BeerID INT,
-    Appearance FLOAT NOT NULL,
-    Aroma FLOAT NOT NULL,
-    Palate FLOAT NOT NULL,
-    Taste FLOAT NOT NULL,
-    Overall FLOAT NOT NULL,
-    Created TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    Text VARCHAR(255),
-    Username VARCHAR(255),
-    CONSTRAINT pk_BeerReview_ReviewID
-        PRIMARY KEY (ReviewID),
-    CONSTRAINT fk_BeerReview_BeerID FOREIGN KEY (BeerID)
-        REFERENCES Beer(BeerID)
-        ON UPDATE cascade ON DELETE SET NULL,
-    CONSTRAINT fk_BeerReview_Username FOREIGN KEY (Username)
-        REFERENCES Person(Username)
-        ON UPDATE CASCADE ON DELETE SET NULL
+CREATE TABLE BeerReviews (
+	ReviewID INT AUTO_INCREMENT,
+	BeerID INT,
+	Appearance FLOAT,
+	Aroma FLOAT,
+	Palate FLOAT,
+	Taste FLOAT,
+	Overall FLOAT,
+	Time TIMESTAMP,
+	Text VARCHAR(1024),
+	UserName VARCHAR(255),
+	CONSTRAINT pk_BeerReviews_reviewID PRIMARY KEY (ReviewID),
+	CONSTRAINT fk_BeerReviews_beerID FOREIGN KEY (BeerID)
+		REFERENCES Beers(BeerID)
+		ON UPDATE CASCADE ON DELETE SET NULL
 );
 
-CREATE TABLE BeerComment (
-    CommentID INT AUTO_INCREMENT,
-    Text LONGTEXT NOT NULL,
-    Created TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    Username VARCHAR(255),
-    ReviewID INT,
-    CONSTRAINT pk_BeerComment_CommentID
-        PRIMARY KEY (CommentID),
-    CONSTRAINT fk_BeerComment_Username
-    FOREIGN KEY (Username)
-        REFERENCES Person(Username)
-        ON UPDATE CASCADE ON DELETE SET NULL,
-    CONSTRAINT fk_BeerComment_ReviewID
-    FOREIGN KEY (ReviewID)
-        REFERENCES BeerReview(ReviewID)
-        ON UPDATE CASCADE ON DELETE CASCADE
+CREATE TABLE BeerComments (
+	CommentID INT AUTO_INCREMENT,
+	Content VARCHAR(1024),
+	Created TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+	ReviewID INT,
+	UserName VARCHAR(255),
+	CONSTRAINT pk_BeerComments_CommentID PRIMARY KEY (CommentID),
+    CONSTRAINT fk_BeerComments_UserName FOREIGN KEY (UserName)
+		REFERENCES Persons(UserName)
+        ON UPDATE CASCADE ON DELETE CASCADE,
+	CONSTRAINT fk_BeerComments_ReviewID FOREIGN KEY (ReviewID)
+		REFERENCES BeerReviews(ReviewID)
+		ON UPDATE CASCADE ON DELETE SET NULL
 );
+
+CREATE TABLE Foods (
+	FoodName VARCHAR(255),
+    Style VARCHAR(255),
+	CONSTRAINT pk_Foods_FoodName_Style PRIMARY KEY (FoodName, Style)
+);
+
+
+
