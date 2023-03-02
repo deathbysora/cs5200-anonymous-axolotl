@@ -33,18 +33,40 @@ class Table:
         """Adds a record to the table."""
         self.data.add(self.parseStrategy(self.columns, record))
 
-    def writeToFile(self) -> None:
+    def writeToFile(self, outDirectory: str) -> None:
         """Writes the table to a csv file."""
+        if outDirectory[-1] != "/":
+            outDirectory += "/"
+            
         fileName = self.tableName.lower().replace(" ", "")
         extension = "csv"
         print(f"Writing {fileName}.{extension}... ", end="")
-        with open(f"{fileName}.{extension}", "w") as file:
+        with open(f"{outDirectory}{fileName}.{extension}", "w") as file:
             file.write(",".join(self.columns))
             file.write("\n")
             file.write("\n".join(list(self.data)))
         print("done")
 
-_surroundWithQuotes = lambda x: f'"{x}"'
+def _wrapWithQuotes(text: str) -> str:
+    """Surrounds a string with double quotes."""
+    return f'"{text}"'
+
+def _extractNumerator(text: str) -> str:
+    """Returns the numerator of a fraction passed as a string."""
+    return text[:text.find("/", 0)]
+
+def _baseConversion(text: str, callback: Callable[[int], int]) -> str:
+    """Applies the callback to the integer passed as a string."""
+    numerator = _extractNumerator(text)
+    return str(callback(numerator))
+    
+def _base5To10(text: str) -> str:
+    """Converts fractions of base 5 to base 10."""
+    return _baseConversion(text, lambda x: int(x) * 2)
+
+def _base20to10(text: str) -> str:
+    """Converts fractions of base 20 to base 10."""
+    return _baseConversion(text, lambda x: int(x) / 2)
 
 def _epochToDateTime(text: str) -> str:
     """Converts a number in string format to datetime format \"YY-MM-DD HH:MM:SS\""""
@@ -53,41 +75,51 @@ def _epochToDateTime(text: str) -> str:
     return datetime.fromtimestamp(int(text), timezone.utc).strftime("%Y-%m-%d %H:%M:%S")
 
 mysqlFormatters: dict[str, Callable[[str], str]] = {
-    "BeerName": _surroundWithQuotes,
-    "Style": _surroundWithQuotes,
+    "BeerName": _wrapWithQuotes,
+    "Style": _wrapWithQuotes,
+    "Appearance": _base5To10,
+    "Aroma": _extractNumerator,
+    "Palate": _base5To10,
+    "Taste": _extractNumerator,
+    "Overall": _base20to10,
     "Created": _epochToDateTime,
-    "Username": _surroundWithQuotes,
-    "Text": _surroundWithQuotes,
+    "Username": _wrapWithQuotes,
+    "Text": _wrapWithQuotes,
 }
 
-def _keyStrategy(keys: list[str], record: dict[str, Any]) -> str:
-    """Extracts all key values from record into a single string formatted for CSV serialization."""
+def _getRecordValues(keys: list[str], record: dict[str, Any]) -> list[str]:
     NULL_VALUES = ["-", ""]
 
-    wanted = []
+    result = []
     for key in keys:
         value = record[key]
         if value in NULL_VALUES:
-            wanted.append("NULL")
+            result.append("NULL")
         elif key in mysqlFormatters:
-            wanted.append(mysqlFormatters[key](value))
+            result.append(mysqlFormatters[key](value))
         else:
-            wanted.append(value)
+            result.append(value)
 
-    return ",".join(wanted)
+    return result
 
-def main(data_path: str, output_directory: str) -> None:
+
+def _keyStrategy(keys: list[str], record: dict[str, Any]) -> str:
+    """Extracts all key values from record into a single string formatted for CSV serialization."""
+    result = _getRecordValues(keys, record)
+    return ",".join(result) 
+
+def main(dataPath: str, outDirectory: str) -> None:
     """Entry point."""
-    if not os.path.isfile(data_path):
-        print(f"{output_directory} is not a valid file.")
+    if not os.path.isfile(dataPath):
+        print(f"{outDirectory} is not a valid file.")
         return
 
-    if not os.path.isdir(output_directory):
-        print(f"{output_directory} is not a valid directory.")
+    if not os.path.isdir(outDirectory):
+        print(f"{outDirectory} is not a valid directory.")
         return
 
-    print(f"Opening data file: {data_path}")
-    with open(data_path, "r") as file:
+    print(f"Opening data file: {dataPath}")
+    with open(dataPath, "r") as file:
         print("Reading file... ", end="")
         lines = file.readlines()
     print("done")
@@ -151,7 +183,7 @@ def main(data_path: str, output_directory: str) -> None:
             return
 
     for table in tables:
-        table.writeToFile()
+        table.writeToFile(outDirectory)
 
 REQUIRED_ARG_LENGTH = 3
 if len(sys.argv) != REQUIRED_ARG_LENGTH:
