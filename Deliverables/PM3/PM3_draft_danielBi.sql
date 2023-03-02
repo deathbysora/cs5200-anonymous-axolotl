@@ -41,8 +41,13 @@ WHERE Style REGEXP ".*ale.*"; -- we can do an enum callout?
 
 
 # 6 Top 10 most active users in 2023 (cross review comments and user engagements/view history)
-# Elsa working on it rn
-
+SELECT UserName, COUNT(1)-1 AS TotalEngagementCount FROM
+(SELECT UserName FROM Users
+UNION ALL
+SELECT UserName FROM BeerComments
+UNION ALL
+SELECT UserName FROM ViewHistory) AS a
+GROUP BY USErName ORder BY TotalEngagementCount DEsc limit 10;
 
 # 7 What are the top 5 most reviewed beers in the summer season (May-Sept)
 # WARNING takes long.
