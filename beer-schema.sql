@@ -2,7 +2,7 @@
 CREATE SCHEMA IF NOT EXISTS BeersApp;
 USE BeersApp;
 
-DROP TABLE IF EXISTS Foods;
+DROP TABLE IF EXISTS Food;
 DROP TABLE IF EXISTS BeerComments;
 DROP TABLE IF EXISTS BeerReviews;
 DROP TABLE IF EXISTS ViewHistory;
@@ -133,10 +133,10 @@ CREATE TABLE BeerComments (
     ON UPDATE CASCADE ON DELETE SET NULL
 );
 
-CREATE TABLE Foods (
+CREATE TABLE Food (
   FoodName VARCHAR(255),
   Style VARCHAR(255),
-  CONSTRAINT pk_Foods_FoodName_Style
+  CONSTRAINT pk_Food_FoodName_Style
     PRIMARY KEY (FoodName, Style)
 );
 
