@@ -2,20 +2,20 @@
 CREATE SCHEMA IF NOT EXISTS BeersApp;
 USE BeersApp;
 
+DROP TABLE IF EXISTS Foods;
+DROP TABLE IF EXISTS BeerComments;
+DROP TABLE IF EXISTS BeerReviews;
 DROP TABLE IF EXISTS ViewHistory;
-DROP TABLE IF EXISTS Persons;
+DROP TABLE IF EXISTS Beers;
+DROP TABLE IF EXISTS BeerStyles;
+DROP TABLE IF EXISTS Brewers;
 DROP TABLE IF EXISTS Administrators;
 DROP TABLE IF EXISTS Users;
-DROP TABLE IF EXISTS BeerReviews;
-DROP TABLE IF EXISTS BeerComments;
-DROP TABLE IF EXISTS Brewers;
-DROP TABLE IF EXISTS BeerStyles;
-DROP TABLE IF EXISTS Beers;
-DROP TABLE IF EXISTS Foods;
+DROP TABLE IF EXISTS Persons;
 
 CREATE TABLE Persons (
   UserName VARCHAR(255),
-  CONSTRAINT pk_Persons_UserName 
+  CONSTRAINT pk_Persons_UserName
   PRIMARY KEY (UserName)
 );
 
@@ -53,8 +53,8 @@ CREATE TABLE BeerStyles (
 
 CREATE TABLE Beers (
   BeerId INT,
-  BeerName VARCHAR(255),
-  ABV FLOAT,
+  BeerName VARCHAR(255) NOT NULL,
+  ABV FLOAT NOT NULL,
   BrewerId INT,
   Style VARCHAR(255),
   CONSTRAINT pk_Beers_BeerId
@@ -87,46 +87,56 @@ CREATE TABLE ViewHistory (
 );
 
 CREATE TABLE BeerReviews (
-	ReviewID INT AUTO_INCREMENT,
-	BeerID INT,
-	Appearance FLOAT,
-	Aroma FLOAT,
-	Palate FLOAT,
-	Taste FLOAT,
-	Overall FLOAT,
-	Time TIMESTAMP,
-	Text VARCHAR(1024),
-	UserName VARCHAR(255),
-	CONSTRAINT pk_BeerReviews_reviewID 
-    PRIMARY KEY (ReviewID),
-	CONSTRAINT fk_BeerReviews_beerID 
-    FOREIGN KEY (BeerID)
-		REFERENCES Beers(BeerID)
-		ON UPDATE CASCADE ON DELETE SET NULL
+  ReviewId INT AUTO_INCREMENT,
+  Appearance FLOAT NOT NULL,
+  Aroma FLOAT NOT NULL,
+  Palate FLOAT NOT NULL,
+  Taste FLOAT NOT NULL,
+  Overall FLOAT NOT NULL,
+  Created TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  Text VARCHAR(1024),
+  UserName VARCHAR(255),
+  BeerID INT,
+  CONSTRAINT ck_BeerReviews_Appearance
+    CHECK (Appearance >= 0 and Appearance <= 10),
+  CONSTRAINT ck_BeerReviews_Aroma
+    CHECK (Aroma >= 0 and Aroma <= 10),
+  CONSTRAINT ck_BeerReviews_Palate
+    CHECK (Palate >= 0 and Palate <= 10),
+  CONSTRAINT ck_BeerReviews_Taste
+    CHECK (Taste >= 0 and Taste <= 10),
+  CONSTRAINT ck_BeerReviews_Overall
+    CHECK (Overall >= 0 and Overall <= 10),
+  CONSTRAINT pk_BeerReviews_ReviewId
+    PRIMARY KEY (ReviewId),
+  CONSTRAINT fk_BeerReviews_BeerId
+    FOREIGN KEY (BeerId)
+    REFERENCES Beers(BeerId)
+    ON UPDATE CASCADE ON DELETE SET NULL
 );
 
 CREATE TABLE BeerComments (
-	CommentID INT AUTO_INCREMENT,
-	Content VARCHAR(1024),
-	Created TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-	ReviewID INT,
-	UserName VARCHAR(255),
-	CONSTRAINT pk_BeerComments_CommentID 
+  CommentID INT AUTO_INCREMENT,
+  Content VARCHAR(1024),
+  Created TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  ReviewID INT,
+  UserName VARCHAR(255),
+  CONSTRAINT pk_BeerComments_CommentID
     PRIMARY KEY (CommentID),
-    CONSTRAINT fk_BeerComments_UserName 
+  CONSTRAINT fk_BeerComments_UserName
     FOREIGN KEY (UserName)
-		REFERENCES Persons(UserName)
-        ON UPDATE CASCADE ON DELETE CASCADE,
-	CONSTRAINT fk_BeerComments_ReviewID 
+    REFERENCES Persons(UserName)
+    ON UPDATE CASCADE ON DELETE CASCADE,
+  CONSTRAINT fk_BeerComments_ReviewID
     FOREIGN KEY (ReviewID)
-		REFERENCES BeerReviews(ReviewID)
-		ON UPDATE CASCADE ON DELETE SET NULL
+    REFERENCES BeerReviews(ReviewID)
+    ON UPDATE CASCADE ON DELETE SET NULL
 );
 
 CREATE TABLE Foods (
-	FoodName VARCHAR(255),
-    Style VARCHAR(255),
-	CONSTRAINT pk_Foods_FoodName_Style 
+  FoodName VARCHAR(255),
+  Style VARCHAR(255),
+  CONSTRAINT pk_Foods_FoodName_Style
     PRIMARY KEY (FoodName, Style)
 );
 
