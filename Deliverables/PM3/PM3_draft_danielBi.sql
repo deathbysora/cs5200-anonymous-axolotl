@@ -41,16 +41,18 @@ WHERE Style = 'Ale'; # we can do an enum callout?
 
 
 #7 What are the top 5 most reviewed beers in the summer season (May-Sept)
-SELECT Style, COUNT(*) AS Review_Counts
-FROM Beer
-GROUP BY Style
-HAVING (MONTH(time) <= 9 and MONTH(time) >= 5)
+# not working
+# better to show the beer name
+SELECT BeerID, Created as Review_time, COUNT(*) AS Review_Counts
+FROM BeerReview
+GROUP BY BeerID, Review_time
+HAVING MONTH(Review_time) <= 9 and MONTH(Review_time) >= 5
 ORDER BY Review_Counts DESC
 LIMIT 10;
 
+
 #8 What are the top 5 most VIEWED beers in the winter season (Oct-Dec)
 SELECT UserName, COUNT(*) AS View_Counts
-# need to populate this table
 FROM ViewHistory
 GROUP BY UserName
 HAVING (MONTH(time) <= 12 and MONTH(time) >= 10)
