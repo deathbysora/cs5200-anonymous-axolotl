@@ -1,3 +1,4 @@
+USE BeerApp;
 # TODO fix floats being read in as integers.
 
 LOAD DATA LOCAL INFILE "~/onedrive/me/northeastern/2023-spring/cs5200/anonymous-axolotl/data-parsing/users.csv" INTO TABLE Persons
