@@ -1,30 +1,32 @@
 USE BeerApplication;
 
-#1 What are the top 10 most reviewed beers from the reviews
-SELECT Style, COUNT(*) AS Review_Counts
-FROM Beer
-GROUP BY Style
+# 1 What are the top 10 most reviewed beer from the reviews
+SELECT BeerName, COUNT(*) AS Review_Counts
+FROM BeerReviews INNER JOIN Beers
+  ON BeerReviews.BeerId = Beers.BeerId
+GROUP BY Beers.BeerId, BeerName
 ORDER BY Review_Counts DESC
 LIMIT 10;
 
-#2 What are the top 10 most viewed beers by other users (will be populated as user using it)
-SELECT UserName, COUNT(*) AS View_Counts
+# 2 What are the top 10 most viewed beers by users (will be populated as user using it)
+SELECT BeerName, COUNT(*) AS View_Counts
 # need to populate this table
-FROM ViewHistory
-GROUP BY UserName
+FROM ViewHistory INNER JOIN Beers
+  ON ViewHistory.BeerId = Beers.BeerId
+GROUP BY Beers.BeerId, BeerName
 ORDER BY View_Counts DESC
 LIMIT 10;
 
-#3 What are the top 10 profile that reviewed the most amount of beers (like a leader board)
+#3 What are the top 10 users that reviewed the most amount of beers (like a leader board)
 SELECT Username, COUNT(*) AS UserName_Counts
-FROM BeerReview
+FROM BeerReviews
 GROUP BY UserName
 ORDER BY UserName_Counts DESC
 LIMIT 10;
 
-#4 What are the most 10 popular reviews that has the most comment
+#4 What are the most 10 popular reviews that has the most comments
 SELECT ReviewId, COUNT(*) AS Review_Engagement
-FROM BeerComment
+FROM BeerComments
 GROUP BY ReviewId
 ORDER BY Review_Engagement DESC
 LIMIT 10;
@@ -41,23 +43,25 @@ WHERE Style = 'Ale'; # we can do an enum callout?
 
 
 #7 What are the top 5 most reviewed beers in the summer season (May-Sept)
-SELECT Style, COUNT(*) AS Review_Counts
-FROM Beer
-GROUP BY Style
-HAVING (MONTH(time) <= 9 and MONTH(time) >= 5)
+SELECT BeerName, COUNT(*) AS Review_Counts
+FROM BeerReviews INNER JOIN Beers
+  ON BeerReviews.BeerId = Beers.BeerId
+WHERE (MONTH(Created) <= 9 and MONTH(Created) >= 5)
+GROUP BY Beers.BeerId, BeerName
 ORDER BY Review_Counts DESC
-LIMIT 10;
+LIMIT 5;
 
 #8 What are the top 5 most VIEWED beers in the winter season (Oct-Dec)
-SELECT UserName, COUNT(*) AS View_Counts
+SELECT BeerName, COUNT(*) AS View_Counts
 # need to populate this table
-FROM ViewHistory
-GROUP BY UserName
-HAVING (MONTH(time) <= 12 and MONTH(time) >= 10)
+FROM ViewHistory INNER JOIN Beers
+  ON ViewHistory.BeerId = Beers.BeerId
+WHERE (MONTH(Created) <= 12 and MONTH(Created) >= 10)
+GROUP BY Beers.BeerId, BeerName
 ORDER BY View_Counts DESC
-LIMIT 10;
+LIMIT 5;
 
-#9 Which user have not created a review not viewed any beers
+#9 Which users have never created a review or viewed any beers.
 SELECT Users.UserName
 FROM Users
   LEFT OUTER JOIN
@@ -68,10 +72,11 @@ FROM Users
   ON ViewHistory.UserName = Users.UserName
   WHERE BeerReview.ReviewId is NULL and ViewHistory.ViewId is NULL;
   
-#10 On average, how many food pairings options does one beer have?
-SELECT AVG(T.PAIRING_COUNT) as AVERAGE_PAIRING
+#10 On average, how many food pairings options does any one beer style have?
+SELECT AVG(T.Pairing_Counts) as Average_Pairing
 FROM(
-  SELECT Food.Style, COUNT(*) AS PAIRING_COUNT
-  FROM Food
-  GROUP BY Food.Style
+  SELECT BeerStyles.Style, COUNT(*) AS Pairing_Counts
+  FROM BeerStyles LEFT OUTER JOIN Food
+    ON BeerStyles.Style = Food.Style
+  GROUP BY BeerStyles.Style
 ) AS T
