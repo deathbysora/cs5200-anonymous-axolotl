@@ -31,3 +31,7 @@ This script only works on ratebeer's json data structure. Which you can download
 </br>
 
 For more information on the dataset and its source, you can view [UCSD's full dataset collection](https://cseweb.ucsd.edu/~jmcauley/datasets.html#multi_aspect).
+
+# Additional Data Links
+
+[Randomly generated generic comments](https://drive.google.com/file/d/1ZwurySMqEDbwe4xkJdNLlMuX8Fa-csCZ/view?usp=share_link).
