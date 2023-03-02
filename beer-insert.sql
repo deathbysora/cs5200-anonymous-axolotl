@@ -37,3 +37,9 @@ FIELDS TERMINATED BY "," OPTIONALLY ENCLOSED BY '"'
 LINES TERMINATED BY '\r\n'
 IGNORE 1 LINES
 (Content, Created, ReviewId, Username);
+
+LOAD DATA LOCAL INFILE "~/onedrive/me/northeastern/2023-spring/cs5200/anonymous-axolotl/data-parsing/food.csv" INTO TABLE Food
+FIELDS TERMINATED BY ","
+LINES TERMINATED BY '\r\n'
+IGNORE 1 LINES
+(Style, FoodName);
