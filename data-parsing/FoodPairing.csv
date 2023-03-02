@@ -1,0 +1,415 @@
+Style,FoodName
+Belgian White,Bearnaise Prawns
+Belgian White,Bearnaise Lobster
+Belgian White,Alfredo Prawns
+Belgian White,Alfredo Lobster
+Belgian White,Pizza
+Belgian White,Chicken
+Belgian White,Sandwich
+Doppelbock,Roasted Pork
+Specialty Grain,Pasta
+Specialty Grain,Rice
+American Strong Ale,Roast Beef
+American Strong Ale,Roast Lamb
+American Strong Ale,Double Gloucester
+American Strong Ale,Canolli
+American Strong Ale,Toffee Apple Crisp
+Wheat Ale,Gruyere Cheese
+Wheat Ale,Feta Cheese
+Wheat Ale,Goat Cheese
+Wheat Ale,Cheesy Potato
+Abbey Tripel,Ham
+Abbey Tripel,Prosciutto
+Abbey Tripel,Sea Bass
+Abbey Tripel,Lightly Cooked Mollusks
+Pilsener,Muenster
+Pilsener,Hvarti
+Pilsener,Monterey Jack
+Pilsener,Salmon
+Pilsener,Tuna
+Klsch,Marinated Cheese
+Klsch,Feta Cheese
+Klsch,Mozzarella
+Klsch,Burrate
+Klsch,Fried Chicken
+Lambic - Faro,Chocolate
+Lambic - Faro,Tart
+Lambic - Faro,Sea Bass
+Sour Ale/Wild Ale,Bleu
+Sour Ale/Wild Ale,Goat Cheese
+Sour Ale/Wild Ale,Mussels
+Sour Ale/Wild Ale,Omelets
+Sour Ale/Wild Ale,Egg Benedict
+Sour Ale/Wild Ale,Cured Pork
+Golden Ale/Blond Ale,Chicken
+Golden Ale/Blond Ale,Salmon
+Golden Ale/Blond Ale,Bratwurst
+Golden Ale/Blond Ale,Monterey Jack
+Golden Ale/Blond Ale,Mandarin Cake
+Golden Ale/Blond Ale,Lemon Custard Tart
+Sak - Taru,Japanese Chilled Tofu
+Sak - Taru,Eel Sashimi
+Sak - Taru,Sushi
+Sak - Taru,Yakitori
+Altbier,Roasted Chicken
+Altbier,Pork Tenderloin
+Altbier,Pork Chops
+Altbier,Sausage
+Altbier,Grilled Tuna
+Altbier,Baked Salmon
+Brown Ale,Roast Pork
+Brown Ale,Smoked Sausage
+Brown Ale,Grilled Salmon
+Brown Ale,Aged Gouda
+Brown Ale,Almond Cake
+Brown Ale,Maple-walnut Cake
+Brown Ale,Cashew Brittle
+Belgian Strong Ale,Shortbread
+Belgian Strong Ale,Oven-baked Pears
+Belgian Strong Ale,Oven-baked Apples
+Belgian Strong Ale,Cinnamon
+Belgian Strong Ale,Sultanas
+Belgian Strong Ale,Orange Glaze
+Strong Pale Lager/Imperial Pils,Hotdogs
+Strong Pale Lager/Imperial Pils,Burgers
+Strong Pale Lager/Imperial Pils,French Fries
+Strong Pale Lager/Imperial Pils,Buffalo Wings
+Strong Pale Lager/Imperial Pils,Fried Fish
+Strong Pale Lager/Imperial Pils,Pasta
+Smoked,Grilled Meat
+Smoked,Grilled Seafood
+Smoked,Smoked Meat
+Dunkelweizen,Smoked Hamd
+Dunkelweizen,Bacon
+Dunkelweizen,American Barbecue
+Dunkelweizen,Mexican Mole
+Dunkelweizen,Fried Chicken
+Dunkelweizen,Gouda
+Dunkelweizen,Parmesan
+Sweet Stout,Ice Cream
+Sweet Stout,Oyster
+Sweet Stout,Clam Chowder
+Sweet Stout,Steak Pies
+Sweet Stout,American Barbecue
+Sweet Stout,Blue Cheese
+American Pale Ale,Meat Pies
+American Pale Ale,English Cheese
+American Pale Ale,Burgers
+American Pale Ale,Cheddar
+American Pale Ale,Derby
+American Pale Ale,Pumpkin Flan
+American Pale Ale,Maple Bread Pudding
+English Pale Ale,Roast Chicken
+English Pale Ale,Roast Pork
+English Pale Ale,Fish & Chips
+English Pale Ale,Lancashire
+English Pale Ale,Cookies
+Dry Stout,Ice Cream
+Dry Stout,Oyster
+Dry Stout,Clam Chowder
+Dry Stout,Steak Pies
+Dry Stout,American Barbecue
+Dry Stout,Blue Cheese
+Zwickel/Keller/Landbier,Steak
+Zwickel/Keller/Landbier,Venison
+Zwickel/Keller/Landbier,German Sausage
+Zwickel/Keller/Landbier,Grilled Veggies
+Malt Liquor,Roasted Meat
+Malt Liquor,Braised Meat
+Malt Liquor,Smoked Meat
+Malt Liquor,Toasted Grains
+Malt Liquor,Mushrooms
+Malt Liquor,Baked Beans
+Sak - Namasak,Sashimi
+Sak - Namasak,Crab
+Sak - Namasak,Raw Oyster
+Barley Wine,Chocolate Tart
+Barley Wine,Stilton
+Barley Wine,Toasted Nuts
+Barley Wine,Dried Fruit
+Vienna,Sweet Mustart
+Vienna,Spiced Chicken Wings
+Vienna,Venison
+Vienna,Grilled Meat
+Premium Bitter/ESB,Grilled Chicken
+Premium Bitter/ESB,Barbecue
+Premium Bitter/ESB,Spicy Shrimp
+Premium Bitter/ESB,Pizza
+Sak - Infused,Japanese Chilled Tofu
+Sak - Infused,Eel Sashimi
+Sak - Infused,Sushi
+Sak - Infused,Yakitori
+Imperial Stout,Steak
+Imperial Stout,Roasted Beef
+Imperial Stout,Pork Chops
+Imperial Stout,Seasoned Pork Leg
+Imperial Stout,Seasons Lamb
+Abt/Quadrupel,Bread Pudding
+Abt/Quadrupel,Gouda
+Lambic - Fruit,Cherries
+Lambic - Fruit,Sweet Tart
+Lambic - Fruit,Pomegranates
+Lambic - Fruit,Apricots
+Sak - Daiginjo,Sushi
+Sak - Daiginjo,Sashimi
+Sak - Daiginjo,Chinese Steam Fish
+Dunkler Bock,Gruyere
+Dunkler Bock,Swiss Cheese
+Dunkler Bock,Grilled Meat
+Dunkler Bock,Grilled Fish
+Dunkler Bock,Sausage
+Belgian Ale,Shortbread
+Belgian Ale,Oven-Baked Pears
+Belgian Ale,Cinnamon
+Belgian Ale,Sultanas
+Belgian Ale,Orange Glaze
+Sak - Futsu-shu,BBQ Ribs
+Sak - Futsu-shu,Yakitori
+Sak - Futsu-shu,Rice
+Sak - Futsu-shu,Mushrooms
+Traditional Ale,Burgers
+Traditional Ale,Buffalo Wings
+Traditional Ale,Asian Food
+Traditional Ale,Fish & Chips
+Traditional Ale,Steaks
+Traditional Ale,Pizza
+Traditional Ale,Parmesan
+American Dark Lager,Barbecue
+American Dark Lager,Sausages
+American Dark Lager,Roasted Meat
+Stout,Roasted Food
+Stout,Smoked Foods
+Stout,Oysters
+Stout,Chocolate
+Stout,Braised Leg
+Sak - Tokubetsu,Yakisoba
+Sak - Tokubetsu,Tonkatsu
+Sak - Tokubetsu,Sushi
+Sak - Tokubetsu,Sashimi
+Sak - Tokubetsu,Chinese Steam Fish
+Sak - Junmai,Risotto
+Sak - Junmai,Beef
+Sak - Junmai,Lamb
+Sak - Junmai,Pork Belly
+Black IPA,Fried Chicken
+Black IPA,Spicy Barbecue
+Black IPA,Shor Ribs
+Black IPA,Stri-fried Shrimp
+Black IPA,Burgers
+Black IPA,Foie Gras On Toast
+Mead,Salad
+Mead,Honey
+Mead,Apple
+Imperial/Strong Porter,Ice Cream
+Imperial/Strong Porter,Oyster
+Imperial/Strong Porter,Clam Chowder
+Imperial/Strong Porter,Steak Pies
+Imperial/Strong Porter,American Barbecue
+Imperial/Strong Porter,Blue Cheese
+Spice/Herb/Vegetable,Canolli
+Spice/Herb/Vegetable,Toffee Apple Crisp
+Spice/Herb/Vegetable,Gruyere Cheese
+Spice/Herb/Vegetable,Feta Cheese
+Spice/Herb/Vegetable,Goat Cheese
+Spice/Herb/Vegetable,Cheesy Potato
+Dortmunder/Helles,Fish & Chips
+Dortmunder/Helles,Pork
+Dortmunder/Helles,Shellfish
+Dortmunder/Helles,German Cuisine
+Sak - Koshu,Sushi
+Sak - Koshu,Sashimi
+Sak - Koshu,Japanese Food
+Classic German Pilsener,Muenster
+Classic German Pilsener,Hvarti
+Classic German Pilsener,Monterey Jack
+Classic German Pilsener,Salmon
+Classic German Pilsener,Tuna
+Premium Lager,Shellfish
+Premium Lager,Sushi
+Premium Lager,Grilled Pork
+Premium Lager,Grilled Chicken
+Premium Lager,Pasta
+Premium Lager,Geek Style Shrimp
+Lambic - Gueuze,Mussels
+Lambic - Gueuze,Frieds
+Lambic - Gueuze,Seafood
+Lambic - Gueuze,Tangy Goat
+German Kristallweizen,Roast Pork
+German Kristallweizen,Salad
+German Kristallweizen,Sausages
+German Kristallweizen,Ham
+German Kristallweizen,Sushi
+Cream Ale,Burgers
+Cream Ale,Brats
+Cream Ale,Pulled-pork Barbecue
+Baltic Porter,Roasted Goose
+Baltic Porter,Barbecued Beef
+Baltic Porter,Grilled Sausage
+Mild Ale,Salad
+Mild Ale,Shellfish
+Mild Ale,Monteray Jack
+Mild Ale,Lemon Custard Tarts
+Scotch Ale,Pheasant
+Scotch Ale,Quail
+Scotch Ale,Roasted Pork
+Scotch Ale,Smoked Salmon
+Scotch Ale,Lamb
+Oktoberfest/Mrzen,Pretzeks
+Oktoberfest/Mrzen,Sausage
+Lambic - Unblended,Blue Cheese
+Lambic - Unblended,Cheddar
+Lambic - Unblended,Cherries
+Lambic - Unblended,Sweet Tart
+Lambic - Unblended,Pomegranates
+Lambic - Unblended,Apricots
+Porter,Ice Cream
+Porter,Oyster
+Porter,Clam Chowder
+Porter,Steak Pies
+Porter,American Barbecue
+Porter,Blue Cheese
+India Pale Ale,Curry
+India Pale Ale,Carrot Cake
+India Pale Ale,Gorgonzola 
+India Pale Ale,Cambozola
+India Pale Ale,Caramel Apple Tart
+India Pale Ale,Ginger Spice Cake
+India Pale Ale,Rice Pudding
+Bire de Garde,Seasoned Pork Leg
+Bire de Garde,Herbed Lamb
+Bire de Garde,French Cuisine
+Foreign Stout,Ribs
+Foreign Stout,Sichuan Food
+Foreign Stout,Blue Cheese
+Foreign Stout,Dry-rubbed Wings
+Imperial/Double IPA,Smoked Beef Brisket
+Imperial/Double IPA,Grilled Lamb
+Imperial/Double IPA,Steak
+Imperial/Double IPA,American Artisanal Blue Cheese
+Imperial/Double IPA,Carrot Cake
+Fruit Beer,Toasted Nuts
+Fruit Beer,Feta Cheese
+Fruit Beer,Duck
+Fruit Beer,Pork
+Weizen Bock,Meat
+Weizen Bock,Seafood
+Weizen Bock,Venison
+Weizen Bock,Banana
+Abbey Dubbel,Smoked Foods
+Abbey Dubbel,Sushi
+Abbey Dubbel,Rice
+Abbey Dubbel,Sausages
+Sak - Nigori,Hawaiian BBQ
+Sak - Nigori,Coconut
+Sak - Nigori,Mexican Mole
+Sak - Nigori,Ice Cream
+Bitter,Sweet Potato
+Bitter,Carrot Cake
+Bitter,Stinky Cheese
+Bitter,Bacon
+Bitter,Fried Chicken
+Saison,Grilled Pork
+Saison,Grilled Beef
+Saison,Grilled Lamb
+Saison,Smoked Meats
+Saison,Pad Thai
+Scottish Ale,Dark Chocolate
+Scottish Ale,Toffee
+Scottish Ale,Caramel
+Scottish Ale,Smoked Salmon
+Scottish Ale,Smoked Lamb
+Ice Cider/Perry,Almonds
+Ice Cider/Perry,Sweet Potato
+Ice Cider/Perry,Jalapeno CornBread
+Ice Cider/Perry,Salami
+Ice Cider/Perry,Cheddar
+Ice Cider/Perry,Apricot Cookies
+Irish Ale,Shepherd's Pie
+Irish Ale,Barbeque
+Irish Ale,Steak
+Irish Ale,Pecan Cookies
+Irish Ale,Potato Soup
+Irish Ale,Caramel Cheesecake
+Schwarzbier,Sweet Bread
+Schwarzbier,Coffee Flavored Dessert
+Schwarzbier,Chocolate
+Schwarzbier,Biscuit
+Schwarzbier,Smoked Meats
+Sak - Ginjo,Sushi
+Sak - Ginjo,Sashimi
+Sak - Ginjo,Chinese Steam Fish
+Sak - Ginjo,Mild Fish
+Sak - Ginjo,Pickles
+Bohemian Pilsener,Muenster
+Bohemian Pilsener,Havarti
+Bohemian Pilsener,Monteray Jack
+Bohemian Pilsener,Salads
+Bohemian Pilsener,Salmon
+Bohemian Pilsener,Trout
+Dunkel,Braised Meats
+Dunkel,Caramel
+Dunkel,Bratwurst
+Dunkel,Bockwurst
+Low Alcohol,Thai Cuisine
+Low Alcohol,Indian Cuisine
+Sak - Genshu,Sushi
+Sak - Genshu,Sashimi
+Sak - Genshu,Japanese Food
+Sak - Genshu,Japanese Chilled Tofu
+Sak - Genshu,Eel Sashimi
+Old Ale,Roast Beef
+Old Ale,Roast Lamb
+Old Ale,Double Gloucester
+Old Ale,Canolli
+Old Ale,Toffee Apple Crisp
+Berliner Weisse,French Fries
+Berliner Weisse,Potato Chips
+Berliner Weisse,Pretzels
+Amber Ale,Chicken
+Amber Ale,Salads
+Amber Ale,Salmon
+Amber Ale,Bratwurst
+Amber Ale,Monterey Jack
+Amber Ale,Apricot Cake
+Amber Ale,Lemon Custard Tarts
+German Hefeweizen,Horseradish
+German Hefeweizen,Mustard
+German Hefeweizen,Smoked Pork
+German Hefeweizen,Seafood
+German Hefeweizen,Salad
+German Hefeweizen,Weisswurst
+German Hefeweizen,Apple Strudel
+Cider,Roasted Vegetables
+Cider,Cheddar
+Cider,Mararoni and Cheese
+Cider,Apple Pie
+Eisbock,Pork
+Eisbock,Venison
+Eisbock,Dark Fruit
+Perry,Cooked Fish
+Perry,Roast Chicken
+Perry,Chicken Pies
+Perry,Leek Pie
+Heller Bock,Fish & Chips
+Heller Bock,Pork
+Heller Bock,German Cuisine
+Heller Bock,Shellfish
+Sak - Honjozo,Sushi
+Sak - Honjozo,Hotpot
+Sak - Honjozo,Tempura
+Sak - Honjozo,Fish & Chips
+English Strong Ale,Roast Chiecken
+English Strong Ale,Roast Pork
+English Strong Ale,Fish & Chips
+English Strong Ale,Lancashire
+English Strong Ale,Leicester
+Pale Lager,Hotdogs
+Pale Lager,Burgers
+Pale Lager,French Fries
+Pale Lager,Noodles
+Pale Lager,Pasta
+Pale Lager,Buffalo Wings
+California Common,Grilled Meats
+California Common,Caramel
+California Common,Pork Loin
+California Common,Feta Cheese
