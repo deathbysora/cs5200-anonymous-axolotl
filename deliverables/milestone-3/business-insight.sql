@@ -87,4 +87,4 @@ FROM(
   FROM BeerStyles LEFT OUTER JOIN Food
     ON BeerStyles.Style = Food.Style
   GROUP BY BeerStyles.Style
-) AS T
+) AS T;

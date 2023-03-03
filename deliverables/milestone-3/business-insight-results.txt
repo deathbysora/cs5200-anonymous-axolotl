@@ -1,0 +1,265 @@
++-------------------------------------------------+---------------+
+| BeerName                                        | Review_Counts |
++-------------------------------------------------+---------------+
+| Guinness Draught                                |          3684 |
+| Dogfish Head 90 Minute Imperial IPA             |          3226 |
+| Budweiser                                       |          3116 |
+| Sierra Nevada Pale Ale &#40;Bottle&#41;         |          3114 |
+| Samuel Adams Boston Lager                       |          3101 |
+| Chimay Bleue &#40;Blue&#41; / Grande Rserve     |          3046 |
+| North Coast Old Rasputin Russian Imperial Stout |          2896 |
+| Stone Arrogant Bastard Ale                      |          2863 |
+| Orval                                           |          2809 |
+| Newcastle Brown Ale                             |          2806 |
++-------------------------------------------------+---------------+
+10 rows in set (12.23 sec)
+
++---------------------------------------+-------------+
+| BeerName                              | View_Counts |
++---------------------------------------+-------------+
+| Chiemseer Helle Weisse                |           6 |
+| Dry Dock Grace Dieu Tripel            |           6 |
+| Bowman Wallops Wood                   |           6 |
+| Marzonis Oktoberfest                  |           5 |
+| York Winter Wobbler                   |           5 |
+| Codys Export                          |           5 |
+| Viking Brewing Honey Moon             |           5 |
+| Bullant Thomas Jecks Commonwealth Ale |           5 |
+| Huus-Braui Heller Bgel                |           5 |
+| Matt Private Mens Club Pilsner        |           5 |
++---------------------------------------+-------------+
+10 rows in set (0.01 sec)
+
++---------------+-----------------+
+| Username      | UserName_Counts |
++---------------+-----------------+
+| fonefan       |           16015 |
+| Ungstrup      |           15031 |
+| Papsoe        |           13896 |
+| yespr         |           13224 |
+| oh6gdx        |            9809 |
+| omhper        |            9297 |
+| kp            |            9265 |
+| joergen       |            8169 |
+| jcwattsrugger |            8132 |
+| DJMonarch     |            8105 |
++---------------+-----------------+
+10 rows in set (14.01 sec)
+
++----------+-------------------+
+| ReviewId | Review_Engagement |
++----------+-------------------+
+|       18 |                 4 |
+|        3 |                 4 |
+|       26 |                 4 |
+|       40 |                 4 |
+|        6 |                 4 |
+|       27 |                 4 |
+|       50 |                 4 |
+|       14 |                 4 |
+|       13 |                 4 |
+|       12 |                 4 |
++----------+-------------------+
+10 rows in set (0.73 sec)
+
++----------------------+
+| FoodName             |
++----------------------+
+| Aged Gouda           |
+| Almond Cake          |
+| Apricot Cake         |
+| Asian Food           |
+| Barbeque             |
+| Bleu                 |
+| Brats                |
+| Bratwurst            |
+| Bratwurst            |
+| Buffalo Wings        |
+| Buffalo Wings        |
+| Buffalo Wings        |
+| Burgers              |
+| Burgers              |
+| Burgers              |
+| Burgers              |
+| Burgers              |
+| Cambozola            |
+| Canolli              |
+| Canolli              |
+| Caramel              |
+| Caramel Apple Tart   |
+| Caramel Cheesecake   |
+| Carrot Cake          |
+| Cashew Brittle       |
+| Cheddar              |
+| Cheesy Potato        |
+| Chicken              |
+| Chicken              |
+| Cinnamon             |
+| Cinnamon             |
+| Cookies              |
+| Cured Pork           |
+| Curry                |
+| Dark Chocolate       |
+| Derby                |
+| Double Gloucester    |
+| Double Gloucester    |
+| Egg Benedict         |
+| English Cheese       |
+| Feta Cheese          |
+| Fish & Chips         |
+| Fish & Chips         |
+| Fish & Chips         |
+| French Fries         |
+| French Fries         |
+| Fried Fish           |
+| Ginger Spice Cake    |
+| Goat Cheese          |
+| Goat Cheese          |
+| Gorgonzola           |
+| Grilled Salmon       |
+| Gruyère Cheese       |
+| Hotdogs              |
+| Hotdogs              |
+| Lamb                 |
+| Lancashire           |
+| Lancashire           |
+| Leicester            |
+| Lemon Custard Tart   |
+| Lemon Custard Tarts  |
+| Lemon Custard Tarts  |
+| Mandarin Cake        |
+| Maple Bread Pudding  |
+| Maple-walnut Cake    |
+| Meat Pies            |
+| Monteray Jack        |
+| Monterey Jack        |
+| Monterey Jack        |
+| Mussels              |
+| Noodles              |
+| Omelets              |
+| Orange Glaze         |
+| Orange Glaze         |
+| Oven-baked Apples    |
+| Oven-Baked Pears     |
+| Oven-baked Pears     |
+| Parmesan             |
+| Pasta                |
+| Pasta                |
+| Pecan Cookies        |
+| Pheasant             |
+| Pizza                |
+| Potato Soup          |
+| Pulled-pork Barbecue |
+| Pumpkin Flan         |
+| Quail                |
+| Rice Pudding         |
+| Roast Beef           |
+| Roast Beef           |
+| Roast Chicken        |
+| Roast Chiecken       |
+| Roast Lamb           |
+| Roast Lamb           |
+| Roast Pork           |
+| Roast Pork           |
+| Roast Pork           |
+| Roasted Pork         |
+| Salad                |
+| Salads               |
+| Salmon               |
+| Salmon               |
+| Shellfish            |
+| Shepherd's Pie       |
+| Shortbread           |
+| Shortbread           |
+| Smoked Lamb          |
+| Smoked Salmon        |
+| Smoked Salmon        |
+| Smoked Sausage       |
+| Steak                |
+| Steaks               |
+| Sultanas             |
+| Sultanas             |
+| Toffee               |
+| Toffee Apple Crisp   |
+| Toffee Apple Crisp   |
++----------------------+
+117 rows in set (0.00 sec)
+
++----------------+----------------------+
+| UserName       | TotalEngagementCount |
++----------------+----------------------+
+| moesbar        |                  181 |
+| tihi23         |                  122 |
+| WeisGuy        |                  122 |
+| rowefam3       |                  121 |
+| R_Pothuizen    |                  120 |
+| Plimmer        |                  119 |
+| Steve Banfield |                  119 |
+| vlado          |                  119 |
+| davemcwilliams |                  118 |
+| boddie1        |                  118 |
++----------------+----------------------+
+10 rows in set (11.38 sec)
+
++-----------------------------------------+---------------+
+| BeerName                                | Review_Counts |
++-----------------------------------------+---------------+
+| Dogfish Head 90 Minute Imperial IPA     |          1401 |
+| Guinness Draught                        |          1367 |
+| Samuel Adams Boston Lager               |          1291 |
+| Budweiser                               |          1287 |
+| Sierra Nevada Pale Ale &#40;Bottle&#41; |          1277 |
++-----------------------------------------+---------------+
+5 rows in set (12.44 sec)
+
++---------------------------------------+-------------+
+| BeerName                              | View_Counts |
++---------------------------------------+-------------+
+| Dry Dock Grace Dieu Tripel            |           3 |
+| Codys Export                          |           3 |
+| Wildwood  Rye Pale Ale                |           3 |
+| Holdens March Hare                    |           2 |
+| Bullant Thomas Jecks Commonwealth Ale |           2 |
++---------------------------------------+-------------+
+5 rows in set (0.01 sec)
+
++----------------+
+| UserName       |
++----------------+
+| BierThirty     |
+| eventheodd     |
+| thegoodstuff   |
+| realbeeronly   |
+| bkjones        |
+| dogzdad        |
+| mbpeerson      |
+| BoxerBoy       |
+| gitarzan       |
+| Gekko          |
+| angie497       |
+| Orangeman      |
+| cheersnbeers01 |
+| monock         |
+| beerman420     |
+| alphaking      |
+| Guest15125     |
+| nathan2983     |
+| chriseco       |
+| xotom          |
+| sst            |
+| jgkaz          |
+| fulton22       |
+| staplerz       |
+| virago8        |
+| davel          |
+| FuschDannon    |
+| kingofbeersnj  |
++----------------+
+28 rows in set (3.68 sec)
+
++-----------------+
+| Average_Pairing |
++-----------------+
+|               5 |
++-----------------+
+1 row in set (0.00 sec)
