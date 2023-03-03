@@ -44,3 +44,9 @@ FIELDS TERMINATED BY ","
 LINES TERMINATED BY '\r\n'
 IGNORE 1 LINES
 (Style, FoodName);
+
+LOAD DATA LOCAL INFILE "~/onedrive/me/northeastern/2023-spring/cs5200/anonymous-axolotl/data-parsing/ViewHistory.csv" INTO TABLE ViewHistory
+FIELDS TERMINATED BY ","
+LINES TERMINATED BY '\r\n'
+IGNORE 1 LINES
+(ViewId, Created, Username, BeerId);
