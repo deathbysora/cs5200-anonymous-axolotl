@@ -1,2 +1,3 @@
 # Ignore all generated files.
 *.csv
+.DS_Store
