@@ -1,3 +1,4 @@
-# cs5200-anonymous-axolotl
+## Quick Links
 
-Parent directory that contains our project seperated by its needed stages.
+* [Schema](anonymous-axolotl/deliverables/milestone-2/beer-schema.sql)
+* ![UML Diagram](anonymous-axolotl/deliverables/milestone-2/uml-v2.pdf)
