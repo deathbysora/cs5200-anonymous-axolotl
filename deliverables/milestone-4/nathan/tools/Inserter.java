@@ -21,12 +21,17 @@ public class Inserter {
 		PersonsDao personsDao = PersonsDao.getInstance();
 		AdministratorsDao administratorsDao = AdministratorsDao.getInstance();
 		UsersDao usersDao = UsersDao.getInstance();
+		BeerCommentDao beerCommentDao = BeerCommentDao.getInstance();
+		ViewHistoryDao viewHistoryDao = ViewHistoryDao.getInstance();
+
+		Date date = new Date();
 
 		// INSERT objects from our model.
 		Persons person1 = new Persons("b");
 		person1 = personsDao.create(person1);
 		Persons person2 = new Persons("b1");
 		person2 = personsDao.create(person2);
+		
 		
 		// READ.
 		Persons p1 = personsDao.getPersonFromUserName("b");
@@ -79,6 +84,58 @@ public class Inserter {
 		
 		// Delete.
 		// usersDao.delete(p3);
-		
+
+		BeerComment bc = new BeerComment("Really good!", date, beerReview, person1);
+		bc = beerCommentDao.create(bc);
+
+		BeerComment bc1 = beerCommentDao.getBeerCommentFromCommentId(1);
+		System.out.format("Reading BeerComment: id:%d content:%s created:%s reviewid:%d username:%s \n",
+				bc1.getCommentId(), bc1.getContent().toString(), bc1.getCreated().toString(), bc1.getBeerReview().getReviewId(), 
+				bc1.getPerson().getUserName());
+
+		List<BeerComment> bc2 = beerCommentDao.getBeerCommentArrayForPerson(person1);
+		for (BeerComment b : bc2) {
+			System.out.format("Reading BeerComment: id:%d content:%s created:%s reviewid:%d username:%s \n",
+				b.getCommentId(), b.getContent().toString(), b.getCreated().toString(), b.getBeerReview().getReviewId(), 
+				b.getPerson().getUserName());
+		}
+
+		List<BeerComment> bc3 = beerCommentDao.getBeerCommentArrayForReview(beerReview);
+		for (BeerComment b : bc3) {
+			System.out.format("Reading BeerComment: id:%d content:%s created:%s reviewid:%d username:%s \n",
+				b.getCommentId(), b.getContent().toString(), b.getCreated().toString(), b.getBeerReview().getReviewId(), 
+				b.getPerson().getUserName());
+		}
+
+		BeerComment b4 = beerCommentDao.updateContent(bc, "Light and crisp");
+		System.out.format("Updated content:%s \n",
+				b4.getContent());
+
+		//Delete
+		// beerCommentDao.delete(bc1);
+
+		ViewHistory vh = new ViewHistory(date, person1, beer);
+		vh = viewHistoryDao.create(vh);
+
+		ViewHistory vh1 = viewHistoryDao.getViewHistoryByViewId(1);
+		System.out.format("Reading ViewHistory: id:%d created:%s username:%s beerid:%s \n",
+				vh1.getViewId(), vh1.getCreated().toString(), vh1.getBeer().getBeerId().toString(), 
+				vh1.getPerson().getUserName());
+
+		List<ViewHistory> vh2 = viewHistoryDao.getViewHistoryArrayForPerson(person1);
+		for (ViewHistory v : vh2) {
+			System.out.format("Reading ViewHistory: id:%d created:%s username:%s beerid:%d \n",
+				v.getViewId(), v.getCreated().toString(), v.getBeer().getBeerId(), 
+				v.getPerson().getUserName());
+		}
+		List<ViewHistory> vh3 = viewHistoryDao.getViewHistoryArrayForBeer(Beer beer);
+		for (ViewHistory v : vh3) {
+			System.out.format("Reading ViewHistory: id:%d created:%s username:%s beerid:%d \n",
+				v.getViewId(), v.getCreated().toString(), v.getBeer().getBeerId().toString(), 
+				v.getPerson().getUserName());
+		}
+
+		//Delete
+		// viewHistoryDao.delete(bc1);
 	}
 }
