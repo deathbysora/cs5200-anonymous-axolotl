@@ -2,8 +2,9 @@ package BeerApp.tools;
 
 import BeerApp.dal.*;
 import BeerApp.model.*;
-
+import org.junit.Assert;
 import java.sql.SQLException;
+import java.util.List;
 
 
 /**
@@ -21,27 +22,29 @@ public class Inserter {
 		PersonsDao personsDao = PersonsDao.getInstance();
 		AdministratorsDao administratorsDao = AdministratorsDao.getInstance();
 		UsersDao usersDao = UsersDao.getInstance();
+		
+		BeerStylesDao beerStyleDao = BeerStylesDao.getInstance();
+		FoodDao foodDao = FoodDao.getInstance();
 
 		// INSERT objects from our model.
 		Persons person1 = new Persons("b");
 		person1 = personsDao.create(person1);
 		Persons person2 = new Persons("b1");
 		person2 = personsDao.create(person2);
-		
+
 		// READ.
 		Persons p1 = personsDao.getPersonFromUserName("b");
 		System.out.format("Reading person: u:%s f:%s l:%s \n",
 				p1.getUserName());
-		
+
 		// Update
 		Persons p3 = personsDao.updateUserName(p1, "b2");
 		System.out.format("Updating persons: name:%s \n",
 				p3.getUserName());
-		
+
 		// Delete.
-//		personsDao.delete(p3);
-		
-		
+		// personsDao.delete(p3);
+
 		// INSERT objects from our model.
 		Administrators admin1 = new Administrators("a");
 		admin1 = administratorsDao.create(admin1);
@@ -72,7 +75,7 @@ public class Inserter {
 		System.out.format("Reading user: u:%s \n",
 				u1.getUserName());
 		
-		// Update
+		// Update.
 		Users u3 = usersDao.updateUserName(u1, "u2");
 		System.out.format("Updating users: name:%s \n",
 				u3.getUserName());
@@ -80,5 +83,65 @@ public class Inserter {
 		// Delete.
 		// usersDao.delete(p3);
 		
+		// Insert BeerStyle & Food
+		BeerStyles beerStyle1 = new BeerStyles("BS1");
+		beerStyle1 = beerStyleDao.create(beerStyle1);
+		BeerStyles beerStyle2 = new BeerStyles("BS2");
+		beerStyle2 = beerStyleDao.create(beerStyle2);
+				
+		Food food1 = new Food("f1", beerStyle1);
+		food1 = foodDao.create(food1);
+		Food food2 = new Food("f2", beerStyle2);
+		food2 = foodDao.create(food2);
+			
+		// Read BeerStyles & Food
+		BeerStyles bs1 = beerStyleDao.getBeerStyleByStyle("BS1");
+		System.out.format("Reading beerStyle: s:%s \n",
+			bs1.getStyle());
+								
+		List<Food> fList1 = foodDao.getFoodByStyle(beerStyle1);
+		for (Food f : fList1) {
+			System.out.format("Reading food: s:%s \n",
+				f.getStyle().getStyle());
+		}
+				
+		// Update BeerStyle & food
+		BeerStyles bs2 = beerStyleDao.updateStyle(beerStyle1, "BS3");
+		System.out.format("Updating beerStyle: s:%s \n",
+			bs2.getStyle());
+
+		Food f1 = foodDao.updateFoodName(food2, "f3");
+		System.out.format("Updating food: f:%s \n",
+			f1.getFoodName());
+				
+		// Delete BeerStyle & Food
+		beerStyleDao.delete(beerStyle1);
+		beerStyleDao.delete(beerStyle2);
+		foodDao.delete(food1);
+		foodDao.delete(food2);		
 	}
+  
+  private static void mockBrewers() {
+		BrewersDao brewersDao = BrewersDao.getInstance();
+    
+		// INSERT objects from our model.
+		Brewers brewer1 = new Brewers(1234);
+		brewer1 = brewersDao.create(brewer1);
+		Brewers brewer2 = new Brewers(5678);
+		brewer2 = brewersDao.create(brewer2);
+
+		// READ.
+		Brewers b1 = brewersDao.getBrewerById(1234);
+		Assert.assertEquals(b1.getBrewerId(), 1234);
+
+		// Update.
+		Brewers b3 = brewersDao.updateBrewerId(b1, 5678);
+		Assert.assertEquals(b3.getBrewerId(), 5678);
+
+		// Delete.
+		brewersDao.delete(brewer1);
+		brewersDao.delete(brewer2);
+		brewersDao.delete(b1);
+		brewersDao.delete(b3);
+  }
 }
