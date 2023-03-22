@@ -1,4 +1,4 @@
-package beerapp.beerapp;
+package beerapp;
 
 import java.io.*;
 import javax.servlet.http.*;
