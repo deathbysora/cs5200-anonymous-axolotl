@@ -21,17 +21,23 @@ public class Inserter {
 		PersonsDao personsDao = PersonsDao.getInstance();
 		AdministratorsDao administratorsDao = AdministratorsDao.getInstance();
 		UsersDao usersDao = UsersDao.getInstance();
+		Brewers brewersDao = BrewersDao.getInstance();
 
 		// INSERT objects from our model.
 		Persons person1 = new Persons("b");
 		person1 = personsDao.create(person1);
 		Persons person2 = new Persons("b1");
 		person2 = personsDao.create(person2);
+		Brewers brewer1 = new Brewers(1234);
+		brewer1 = brewersDao.create(brewer1);
+		Brewers brewer2 = new Brewers(5678);
+		brewer2 = brewersDao.create(brewer2);
 		
 		// READ.
 		Persons p1 = personsDao.getPersonFromUserName("b");
 		System.out.format("Reading person: u:%s f:%s l:%s \n",
 				p1.getUserName());
+		Brewers b1 = brewersDao.getBrewerByBrewerId(1234);
 		
 		// Update
 		Persons p3 = personsDao.updateUserName(p1, "b2");
