@@ -95,6 +95,9 @@ public class Inserter {
 		Assert.assertEquals(b3.getBrewerId(), 5678);
 
 		// Delete.
-		// brewersDao.delete(b3);
+//		brewersDao.delete(brewer1);
+//		brewersDao.delete(brewer2);
+//		brewersDao.delete(b1);
+//		brewersDao.delete(b3);
 	}
 }
