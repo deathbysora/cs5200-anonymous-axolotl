@@ -15,12 +15,12 @@ public class BeerReview {
   protected float overall;
   protected Date created;
   protected String text;
-  protected Users user;
-  protected Beers beer;
+  protected User user;
+  protected Beer beer;
   
   // constructors
   public BeerReview(int reviewId, float appearance, float aroma, float palate, float taste,
-                     float overall, Date created, String text, Users user, Beers beer) {
+                     float overall, Date created, String text, User user, Beer beer) {
     this.reviewId = reviewId;
     this.appearance = appearance;
     this.aroma = aroma;
@@ -29,12 +29,12 @@ public class BeerReview {
     this.overall = overall;
     this.created = created;
     this.text = text;
-    this.userName = user;
-    this.beerId = beer;
+    this.user = user;
+    this.beer = beer;
   }
   
   public BeerReview(float appearance, float aroma, float palate, float taste,
-                     float overall, Date created, String text, Users user, Beers beer) {
+                     float overall, Date created, String text, User user, Beer beer) {
     this.appearance = appearance;
     this.aroma = aroma;
     this.palate = palate;
@@ -42,8 +42,8 @@ public class BeerReview {
     this.overall = overall;
     this.created = created;
     this.text = text;
-    this.userName = user;
-    this.beerId = beer;
+    this.user = user;
+    this.beer = beer;
   }
   
   // getters and setters
@@ -112,19 +112,19 @@ public class BeerReview {
     this.text = text;
   }
   
-  public Users getUser() {
+  public User getUser() {
     return user;
   }
   
-  public void setUser(Users user) {
+  public void setUser(User user) {
     this.user = user;
   }
   
-  public Beers getBeer() {
+  public Beer getBeer() {
     return beer;
   }
   
-  public void setBeer(Beers beer) {
+  public void setBeer(Beer beer) {
     this.beer = beer;
   }
 }

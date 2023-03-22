@@ -1,8 +1,8 @@
-package BeerApp.tools;
+package beerapp.tools;
 
-import BeerApp.dal.*;
-import BeerApp.model.*;
-import org.junit.Assert;
+import beerapp.dal.*;
+import beerapp.model.*;
+
 import java.sql.SQLException;
 import java.util.List;
 
@@ -27,58 +27,58 @@ public class Inserter {
 		FoodDao foodDao = FoodDao.getInstance();
 
 		// INSERT objects from our model.
-		Persons person1 = new Persons("b");
+		Person person1 = new Person("b");
 		person1 = personsDao.create(person1);
-		Persons person2 = new Persons("b1");
+		Person person2 = new Person("b1");
 		person2 = personsDao.create(person2);
 
 		// READ.
-		Persons p1 = personsDao.getPersonFromUserName("b");
+		Person p1 = PersonsDao.getPersonFromUserName("b");
 		System.out.format("Reading person: u:%s f:%s l:%s \n",
 				p1.getUserName());
 
 		// Update
-		Persons p3 = personsDao.updateUserName(p1, "b2");
-		System.out.format("Updating persons: name:%s \n",
+		Person p3 = PersonsDao.updateUserName(p1, "b2");
+		System.out.format("Updating Person: name:%s \n",
 				p3.getUserName());
 
 		// Delete.
-		// personsDao.delete(p3);
+		// PersonsDao.delete(p3);
 
 		// INSERT objects from our model.
-		Administrators admin1 = new Administrators("a");
+		Administrator admin1 = new Administrator("a");
 		admin1 = administratorsDao.create(admin1);
-		Administrators admin2 = new Administrators("a1");
+		Administrator admin2 = new Administrator("a1");
 		admin2 = administratorsDao.create(admin2);
 		
 		// READ.
-		Administrators a1 = administratorsDao.getAdministratorFromUserName("a");
+		Administrator a1 = administratorsDao.getAdministratorFromUserName("a");
 		System.out.format("Reading administrator: u:%s \n",
-				a1.getUserName());
+				a1.getUsername());
 		
 		// Update
-		Administrators a3 = administratorsDao.updateUserName(a1, "a2");
+		Administrator a3 = administratorsDao.updateUserName(a1, "a2");
 		System.out.format("Updating administrators: name:%s \n",
-				a3.getUserName());
+				a3.getUsername());
 		
 		// Delete.
 		// administratorsDao.delete(p3);
 		
 		// INSERT objects from our model.
-		Users user1 = new Users("u");
+		User user1 = new User("u");
 		user1 = usersDao.create(user1);
-		Users user2 = new Users("u1");
+		User user2 = new User("u1");
 		user2 = usersDao.create(user2);
 		
 		// READ.
-		Users u1 = usersDao.getUserFromUserName("u");
+		User u1 = usersDao.getUserFromUserName("u");
 		System.out.format("Reading user: u:%s \n",
-				u1.getUserName());
+				u1.getUsername());
 		
 		// Update.
-		Users u3 = usersDao.updateUserName(u1, "u2");
+		User u3 = usersDao.updateUserName(u1, "u2");
 		System.out.format("Updating users: name:%s \n",
-				u3.getUserName());
+				u3.getUsername());
 		
 		// Delete.
 		// usersDao.delete(p3);
@@ -125,18 +125,18 @@ public class Inserter {
 		BrewersDao brewersDao = BrewersDao.getInstance();
     
 		// INSERT objects from our model.
-		Brewers brewer1 = new Brewers(1234);
+		Brewer brewer1 = new Brewer(1234);
 		brewer1 = brewersDao.create(brewer1);
-		Brewers brewer2 = new Brewers(5678);
+		Brewer brewer2 = new Brewer(5678);
 		brewer2 = brewersDao.create(brewer2);
 
 		// READ.
-		Brewers b1 = brewersDao.getBrewerById(1234);
-		Assert.assertEquals(b1.getBrewerId(), 1234);
+		Brewer b1 = brewersDao.getBrewerById(1234);
+		System.out.println(b1.getBrewerId());
 
 		// Update.
-		Brewers b3 = brewersDao.updateBrewerId(b1, 5678);
-		Assert.assertEquals(b3.getBrewerId(), 5678);
+		Brewer b3 = brewersDao.updateBrewerId(b1, 5678);
+		System.out.println(b3.getBrewerId());
 
 		// Delete.
 		brewersDao.delete(brewer1);
