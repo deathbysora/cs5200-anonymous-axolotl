@@ -1,12 +1,10 @@
 package BeerApp.dal;
 
 import BeerApp.model.Brewers;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.concurrent.ConcurrentHashMap;
 
 public class BrewersDao {
   private ConnectionManager  connectionManager;
@@ -76,7 +74,7 @@ public class BrewersDao {
     return null;
 }
 
-  public Brewers updateBrewerId(Brewers brewer, int newBrewerId) 
+  public Brewers updateBrewerId(Brewers brewer, int newBrewerId)
     throws SQLException {
     String updateBrewer = "UPDATE Brewers SET BrewerId=? WHERE BrewerId=?;";
     Connection connection = null;

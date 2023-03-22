@@ -2,7 +2,7 @@ package BeerApp.tools;
 
 import BeerApp.dal.*;
 import BeerApp.model.*;
-
+import org.junit.Assert;
 import java.sql.SQLException;
 
 
@@ -21,33 +21,27 @@ public class Inserter {
 		PersonsDao personsDao = PersonsDao.getInstance();
 		AdministratorsDao administratorsDao = AdministratorsDao.getInstance();
 		UsersDao usersDao = UsersDao.getInstance();
-		Brewers brewersDao = BrewersDao.getInstance();
+		BrewersDao brewersDao = BrewersDao.getInstance();
 
 		// INSERT objects from our model.
 		Persons person1 = new Persons("b");
 		person1 = personsDao.create(person1);
 		Persons person2 = new Persons("b1");
 		person2 = personsDao.create(person2);
-		Brewers brewer1 = new Brewers(1234);
-		brewer1 = brewersDao.create(brewer1);
-		Brewers brewer2 = new Brewers(5678);
-		brewer2 = brewersDao.create(brewer2);
-		
+
 		// READ.
 		Persons p1 = personsDao.getPersonFromUserName("b");
 		System.out.format("Reading person: u:%s f:%s l:%s \n",
 				p1.getUserName());
-		Brewers b1 = brewersDao.getBrewerByBrewerId(1234);
-		
+
 		// Update
 		Persons p3 = personsDao.updateUserName(p1, "b2");
 		System.out.format("Updating persons: name:%s \n",
 				p3.getUserName());
-		
+
 		// Delete.
-//		personsDao.delete(p3);
-		
-		
+		// personsDao.delete(p3);
+
 		// INSERT objects from our model.
 		Administrators admin1 = new Administrators("a");
 		admin1 = administratorsDao.create(admin1);
@@ -78,13 +72,29 @@ public class Inserter {
 		System.out.format("Reading user: u:%s \n",
 				u1.getUserName());
 		
-		// Update
+		// Update.
 		Users u3 = usersDao.updateUserName(u1, "u2");
 		System.out.format("Updating users: name:%s \n",
 				u3.getUserName());
 		
 		// Delete.
 		// usersDao.delete(p3);
-		
+
+		// INSERT objects from our model.
+		Brewers brewer1 = new Brewers(1234);
+		brewer1 = brewersDao.create(brewer1);
+		Brewers brewer2 = new Brewers(5678);
+		brewer2 = brewersDao.create(brewer2);
+
+		// READ.
+		Brewers b1 = brewersDao.getBrewerById(1234);
+		Assert.assertEquals(b1.getBrewerId(), 1234);
+
+		// Update.
+		Brewers b3 = brewersDao.updateBrewerId(b1, 5678);
+		Assert.assertEquals(b3.getBrewerId(), 5678);
+
+		// Delete.
+		// brewersDao.delete(b3);
 	}
 }
