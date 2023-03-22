@@ -1,11 +1,11 @@
-package restaurant.model;
+package beerapp.model;
 
 import java.sql.Date;
 
 /**
  * This is the object for the BeerReview in the Java interface (JDBC)
  */
-public class BeerReviews {
+public class BeerReview {
   // fields
   protected int reviewId;
   protected float appearance;
@@ -19,7 +19,7 @@ public class BeerReviews {
   protected Beers beer;
   
   // constructors
-  public BeerReviews(int reviewId, float appearance, float aroma, float palate, float taste,
+  public BeerReview(int reviewId, float appearance, float aroma, float palate, float taste,
                      float overall, Date created, String text, Users user, Beers beer) {
     this.reviewId = reviewId;
     this.appearance = appearance;
@@ -33,7 +33,7 @@ public class BeerReviews {
     this.beerId = beer;
   }
   
-  public BeerReviews(float appearance, float aroma, float palate, float taste,
+  public BeerReview(float appearance, float aroma, float palate, float taste,
                      float overall, Date created, String text, Users user, Beers beer) {
     this.appearance = appearance;
     this.aroma = aroma;
@@ -128,4 +128,3 @@ public class BeerReviews {
     this.beer = beer;
   }
 }
-  

@@ -1,6 +1,6 @@
-package BeerApp.dal;
+package beerapp.dal;
 
-import BeerApp.model.*;
+import beerapp.model.*;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

@@ -1,4 +1,4 @@
-package BeerApp.model;
+package beerapp.model;
 
 public class BeerStyles {
     protected String style;

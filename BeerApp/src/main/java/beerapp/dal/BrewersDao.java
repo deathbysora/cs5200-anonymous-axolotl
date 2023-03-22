@@ -1,4 +1,4 @@
-package BeerApp.dal;
+package beerapp.dal;
 
 import BeerApp.model.Brewers;
 import java.sql.Connection;
@@ -123,4 +123,3 @@ public class BrewersDao {
     }
 }
 }
-

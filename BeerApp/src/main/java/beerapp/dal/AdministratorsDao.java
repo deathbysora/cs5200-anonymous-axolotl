@@ -1,4 +1,4 @@
-package BeerApp.dal;
+package beerapp.dal;
 
 import BeerApp.model.*;
 
@@ -7,6 +7,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import beerapp.dal.PersonsDao;
 
 /**
  * Data access object (DAO) class to interact with the underlying Administrators table in your

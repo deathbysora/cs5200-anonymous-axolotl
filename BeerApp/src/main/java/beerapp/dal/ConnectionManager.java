@@ -1,4 +1,4 @@
-package BeerApp.dal;
+package beerapp.dal;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

@@ -1,4 +1,4 @@
-package restaurant.dal;
+package beerapp.dal;
 
 import java.sql.Connection;
 import java.sql.Date;
@@ -9,10 +9,10 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import restaurant.model.BeerReviews;
-import restaurant.model.Restaurants;
-import restaurant.model.Reviews;
-import restaurant.model.Users;
+import beerapp.model.BeerReview;
+import beerapp.model.Restaurant;
+import beerapp.model.Review;
+import beerapp.model.User;
 
 public class BeerReviewDao {
   // Set up connections
