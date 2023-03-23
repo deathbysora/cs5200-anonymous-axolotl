@@ -31,7 +31,7 @@ public class Inserter {
         person1 = personsDao.create(person1);
 
         // READ.
-        Person p1 = personsDao.getPersonByUserName("b");
+        Person p1 = personsDao.getPersonByUsername("b");
         System.out.format("Reading person: %s\n", p1.getUsername());
 
         // Update
