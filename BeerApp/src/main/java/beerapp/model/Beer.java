@@ -16,6 +16,10 @@ public class Beer {
         this.style = style;
     }
 
+    public Beer(int id) {
+        this.id = id;
+    }
+
     public Integer getId() {
         return this.id;
     }
