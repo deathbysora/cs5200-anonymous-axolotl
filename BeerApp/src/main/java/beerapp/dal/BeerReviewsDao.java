@@ -28,7 +28,7 @@ public class BeerReviewsDao {
         return instance;
     }
 
-    private static BeerReview deserializeReview(ResultSet result) {
+    public static BeerReview deserializeReview(ResultSet result) {
         UsersDao usersDao = UsersDao.getInstance();
         BeersDao beersDao = BeersDao.getInstance();
         try {

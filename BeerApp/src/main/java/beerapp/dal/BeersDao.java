@@ -3,6 +3,7 @@ package beerapp.dal;
 import static beerapp.dal.Utility.safeCloseResultSet;
 
 import beerapp.model.Beer;
+import beerapp.model.BeerReview;
 import beerapp.model.BeerStyle;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -154,10 +155,11 @@ public class BeersDao {
      * @return a list of beers (could be just one or null) which the metrics are similar to the
      * recommended beer.
      */
-    public List<Beer> getSimilarBeers(Beer beer) {
+    public List<BeerReview> getSimilarBeers(Beer beer) throws SQLException {
 
-        List<Beer> resultSet = new ArrayList<>();
+        List<BeerReview> resultSet = new ArrayList<>();
         ResultSet results = null;
+        //BeerReviewsDao beerReviewsDao = BeerReviewsDao.getInstance();
 
         String beersLookupSQL = 
         "SELECT * FROM " +
@@ -178,10 +180,10 @@ public class BeersDao {
             Connection connection = connectionManager.getConnection();
             PreparedStatement statement = connection.prepareStatement(beersLookupSQL);
         ) {
-            statement.setInt(1, beer.getId().intValue());
+            statement.setInt(1, beer.getId());
             results = statement.executeQuery();
             while (results.next()) {
-                resultSet.add(deserializeResult(results));
+                resultSet.add(BeerReviewsDao.deserializeReview(results));
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
