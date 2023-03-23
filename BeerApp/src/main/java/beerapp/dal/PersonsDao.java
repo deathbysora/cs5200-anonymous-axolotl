@@ -1,141 +1,92 @@
-package BeerApp.dal;
+package beerapp.dal;
 
-import BeerApp.model.*;
+import static beerapp.dal.Utility.safeCloseResultSet;
 
+import beerapp.model.Person;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-
-/**
- * Data access object (DAO) class to interact with the underlying Persons table in your MySQL
- * instance. This is used to store {@link Persons} into your MySQL instance and retrieve 
- * {@link Persons} from MySQL instance.
- */
 public class PersonsDao {
-	protected ConnectionManager connectionManager;
-	
-	// Single pattern: instantiation is limited to one object.
-	private static PersonsDao instance = null;
-	protected PersonsDao() {
-		connectionManager = new ConnectionManager();
-	}
-	public static PersonsDao getInstance() {
-		if(instance == null) {
-			instance = new PersonsDao();
-		}
-		return instance;
-	}
 
-	public Persons create(Persons person) throws SQLException {
-		String insertPerson = "INSERT INTO Persons(UserName) VALUES(?);";
-		Connection connection = null;
-		PreparedStatement insertStmt = null;
-		try {
-			connection = connectionManager.getConnection();
-			insertStmt = connection.prepareStatement(insertPerson);
-			insertStmt.setString(1, person.getUserName());
-			insertStmt.executeUpdate();
-			
-			return person;
-		} catch (SQLException e) {
-			e.printStackTrace();
-			throw e;
-		} finally {
-			if(connection != null) {
-				connection.close();
-			}
-			if(insertStmt != null) {
-				insertStmt.close();
-			}
-		}
-	}
+    private final static String TABLE_NAME = "Persons";
+    private static PersonsDao instance = null;
+    protected ConnectionManager connectionManager;
 
-	public Persons updateUserName(Persons person, String newUserName) throws SQLException {
-		String updatePerson = "UPDATE Persons SET UserName=? WHERE UserName=?;";
-		Connection connection = null;
-		PreparedStatement updateStmt = null;
-		try {
-			connection = connectionManager.getConnection();
-			updateStmt = connection.prepareStatement(updatePerson);
-			updateStmt.setString(1, newUserName);
-			updateStmt.setString(2, person.getUserName());
-			updateStmt.executeUpdate();
-			
-			person.setUserName(newUserName);
-			return person;
-		} catch (SQLException e) {
-			e.printStackTrace();
-			throw e;
-		} finally {
-			if(connection != null) {
-				connection.close();
-			}
-			if(updateStmt != null) {
-				updateStmt.close();
-			}
-		}
-	}
+    protected PersonsDao() {
+        connectionManager = new ConnectionManager();
+    }
 
-	public Persons delete(Persons person) throws SQLException {
-		String deletePerson = "DELETE FROM Persons WHERE UserName=?;";
-		Connection connection = null;
-		PreparedStatement deleteStmt = null;
-		try {
-			connection = connectionManager.getConnection();
-			deleteStmt = connection.prepareStatement(deletePerson);
-			deleteStmt.setString(1, person.getUserName());
-			deleteStmt.executeUpdate();
+    public static PersonsDao getInstance() {
+        if (instance == null) {
+            instance = new PersonsDao();
+        }
+        return instance;
+    }
 
-			return null;
-		} catch (SQLException e) {
-			e.printStackTrace();
-			throw e;
-		} finally {
-			if(connection != null) {
-				connection.close();
-			}
-			if(deleteStmt != null) {
-				deleteStmt.close();
-			}
-		}
-	}
+    public Person create(Person person) {
+        String insertPerson = "INSERT INTO " + TABLE_NAME + " (UserName) VALUES(?);";
+        try (
+          Connection connection = connectionManager.getConnection();
+          PreparedStatement insertStmt = connection.prepareStatement(insertPerson)
+        ) {
+            insertStmt.setString(1, person.getUsername());
+            insertStmt.executeUpdate();
+            return person;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
-	/**
-	 * Get the Persons record by fetching it from your MySQL instance.
-	 * This runs a SELECT statement and returns a single Persons instance.
-	 */
-	public Persons getPersonFromUserName(String userName) throws SQLException {
-		String selectPerson = "SELECT UserName FROM Persons WHERE UserName=?;";
-		Connection connection = null;
-		PreparedStatement selectStmt = null;
-		ResultSet results = null;
-		try {
-			connection = connectionManager.getConnection();
-			selectStmt = connection.prepareStatement(selectPerson);
-			selectStmt.setString(1, userName);
-			results = selectStmt.executeQuery();
-			if(results.next()) {
-				String resultUserName = results.getString("UserName");
-				Persons person = new Persons(resultUserName);
-				return person;
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-			throw e;
-		} finally {
-			if(connection != null) {
-				connection.close();
-			}
-			if(selectStmt != null) {
-				selectStmt.close();
-			}
-			if(results != null) {
-				results.close();
-			}
-		}
-		return null;
-	}
+    public Person updateUsername(Person person, String newUsername) {
+        String updatePerson = "UPDATE " + TABLE_NAME + " SET UserName=? WHERE UserName=?;";
+        try (
+          Connection connection = connectionManager.getConnection();
+          PreparedStatement updateStmt = connection.prepareStatement(updatePerson)
+        ) {
+            updateStmt.setString(1, newUsername);
+            updateStmt.setString(2, person.getUsername());
+            updateStmt.executeUpdate();
+            return new Person(newUsername);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
+    public Person delete(Person person) throws SQLException {
+        String deletePerson = "DELETE FROM " + TABLE_NAME + " WHERE UserName=?;";
+        try (
+          Connection connection = connectionManager.getConnection();
+          PreparedStatement deleteStmt = connection.prepareStatement(deletePerson)
+        ) {
+            deleteStmt.setString(1, person.getUsername());
+            deleteStmt.executeUpdate();
+            return null;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw e;
+        }
+    }
+
+    public Person getPersonByUserName(String userName) {
+        String selectPerson = "SELECT UserName FROM " + TABLE_NAME + " WHERE UserName=?;";
+        ResultSet result = null;
+        try (
+          Connection connection = connectionManager.getConnection();
+          PreparedStatement selectStmt = connection.prepareStatement(selectPerson)
+        ) {
+            selectStmt.setString(1, userName);
+            result = selectStmt.executeQuery();
+            if (result.next()) {
+                String resultUsername = result.getString("Username");
+                return new Person(resultUsername);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            safeCloseResultSet(result);
+        }
+        return null;
+    }
 }

@@ -1,136 +1,94 @@
-package BeerApp.dal;
+package beerapp.dal;
 
-import BeerApp.model.*;
-
+import beerapp.model.BeerStyle;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+
 public class BeerStylesDao {
-	protected ConnectionManager connectionManager;
+    private final static String TABLE_NAME = "beerstyles";
 
     private static BeerStylesDao instance = null;
+    protected ConnectionManager connectionManager;
+
     protected BeerStylesDao() {
         connectionManager = new ConnectionManager();
     }
+
     public static BeerStylesDao getInstance() {
-        if(instance == null) {
+        if (instance == null) {
             instance = new BeerStylesDao();
         }
         return instance;
     }
 
-    public BeerStyles create(BeerStyles beerStyle) throws SQLException {
-        String insertBeerStyles =
-                "INSERT INTO BeerStyles(Style)" + 
-                "VALUEs(?);";
-        Connection connection = null;
-        PreparedStatement insertStmt = null;
-        
-        try {
-        	connection = connectionManager.getConnection();
-        	insertStmt = connection.prepareStatement(insertBeerStyles);
-        	insertStmt.setString(1, beerStyle.getStyle());
-        	insertStmt.executeUpdate();
-        	
-        	return beerStyle;
+    public BeerStyle create(BeerStyle beerStyle) {
+        String insertBeerStyle =
+          "INSERT INTO " + TABLE_NAME + " (Style) VALUES(?);";
+        try (
+          Connection connection = connectionManager.getConnection();
+          PreparedStatement insertStmt = connection.prepareStatement(insertBeerStyle)
+        ) {
+            insertStmt.setString(1, beerStyle.getStyle());
+            insertStmt.executeUpdate();
+            return beerStyle;
         } catch (SQLException e) {
-			e.printStackTrace();
-			throw e;
-		} finally {
-			if (connection != null) {
-				connection.close();
-			}
-			if (insertStmt != null) {
-				connection.close();
-			}
-		}
+            throw new RuntimeException(e);
+        }
     }
-    
-    public BeerStyles updateStyle(BeerStyles beerStyle, String style) throws SQLException {
-    	String updateBeerStyle = 
-    			"UPDATE BeerStyles SET Style =? where Style =?;";
-    	Connection connection = null;
-    	PreparedStatement updateStmt = null;
-    	try {
-    		connection = connectionManager.getConnection();
-    		updateStmt = connection.prepareStatement(updateBeerStyle);
-    		updateStmt.setString(1, style);
-    		updateStmt.setString(2, beerStyle.getStyle());
-    		updateStmt.executeUpdate();
-    		
-    		beerStyle.setStyle(style);
-    		return beerStyle;
-    	} catch (SQLException e) {
-			e.printStackTrace();
-			throw e;
-		} finally {
-			if (connection != null) {
-				connection.close();
-			}
-			if (updateStmt != null) {
-				connection.close();
-			}
-		}
+
+    public BeerStyle updateStyle(BeerStyle beerStyle, String newStyle) {
+        String updateBeerStyle =
+          "UPDATE " + TABLE_NAME + " SET Style=? where Style=?;";
+        try (
+          Connection connection = connectionManager.getConnection();
+          PreparedStatement updateStmt = connection.prepareStatement(updateBeerStyle)
+        ) {
+            updateStmt.setString(1, newStyle);
+            updateStmt.setString(2, beerStyle.getStyle());
+            updateStmt.executeUpdate();
+            return new BeerStyle(newStyle);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
-    
-    public BeerStyles delete(BeerStyles beerStyle) throws SQLException {
-    	String deleteBeerStyles = "DELETE FROM BeerStyles WHERE Style =?;";
-		Connection connection = null;
-		PreparedStatement deleteStmt = null;
-		try {
-			connection = connectionManager.getConnection();
-			deleteStmt = connection.prepareStatement(deleteBeerStyles);
-			deleteStmt.setString(1, beerStyle.getStyle());
-			deleteStmt.executeUpdate();
-			return null;
-		} catch (SQLException e) {
-			e.printStackTrace();
-			throw e;
-		} finally {
-			if (connection != null) {
-				connection.close();
-			}
-			if (deleteStmt != null) {
-				connection.close();
-			}
-		}
+
+    public BeerStyle delete(BeerStyle beerStyle) {
+        String deleteBeerStyle = "DELETE FROM " + TABLE_NAME + " WHERE Style =?;";
+        try (
+          Connection connection = connectionManager.getConnection();
+          PreparedStatement deleteStmt = connection.prepareStatement(deleteBeerStyle);
+        ) {
+            deleteStmt.setString(1, beerStyle.getStyle());
+            deleteStmt.executeUpdate();
+            return null;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
-    
-    public BeerStyles getBeerStyleByStyle(String style) throws SQLException {
-    	String selectBeerStyles = 
-				"SELECT Style" + 
-				"FROM BeerStyles WHERE Style =?;";
-		Connection connection = null;
-		PreparedStatement selectStmt = null;
-		ResultSet results = null;
-		try {
-			connection = connectionManager.getConnection();
-			selectStmt = connection.prepareStatement(selectBeerStyles);
-			selectStmt.setString(1, style);
-			
-			results = selectStmt.executeQuery();
-			if (results.next()) {
-				String resultStyle = results.getString("Style");
-			
-				BeerStyles beerStyle = new BeerStyles(resultStyle);
-				return beerStyle;
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-			throw e;
-		} finally {
-			if (connection != null) {
-				connection.close();
-			}
-			if (selectStmt != null) {
-				connection.close();
-			}
-			if (results != null) {
-				results.close();
-			}
-		}
-		return null;
+
+    public BeerStyle getBeerStyle(String style) {
+        String selectBeerStyle =
+          "SELECT Style FROM " + TABLE_NAME + " WHERE Style =?;";
+        ResultSet results = null;
+        try (
+          Connection connection = connectionManager.getConnection();
+          PreparedStatement selectStmt = connection.prepareStatement(selectBeerStyle)
+        ) {
+            selectStmt.setString(1, style);
+
+            results = selectStmt.executeQuery();
+            if (results.next()) {
+                String resultStyle = results.getString("Style");
+                return new BeerStyle(resultStyle);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            Utility.safeCloseResultSet(results);
+        }
+        return null;
     }
 }

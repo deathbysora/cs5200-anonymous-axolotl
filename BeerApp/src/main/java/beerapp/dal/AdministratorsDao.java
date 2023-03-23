@@ -1,135 +1,100 @@
-package BeerApp.dal;
+package beerapp.dal;
 
-import BeerApp.model.*;
+import static beerapp.dal.Utility.safeCloseResultSet;
 
+import beerapp.model.Administrator;
+import beerapp.model.Person;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-
-/**
- * Data access object (DAO) class to interact with the underlying Administrators table in your
- * MySQL instance. This is used to store {@link Administrators} into your MySQL instance and 
- * retrieve {@link Administrators} from MySQL instance.
- */
 public class AdministratorsDao extends PersonsDao {
-	private static AdministratorsDao instance = null;
-	protected AdministratorsDao() {
-		super();
-	}
-	public static AdministratorsDao getInstance() {
-		if(instance == null) {
-			instance = new AdministratorsDao();
-		}
-		return instance;
-	}
-	
-	public Administrators create(Administrators administrator) throws SQLException {
-		// Insert into the superclass table first.
-		create(new Persons(administrator.getUserName()));
 
-		String insertAdministrator = "INSERT INTO Administrators(UserName) VALUES(?);";
-		Connection connection = null;
-		PreparedStatement insertStmt = null;
-		try {
-			connection = connectionManager.getConnection();
-			insertStmt = connection.prepareStatement(insertAdministrator);
-			insertStmt.setString(1, administrator.getUserName());
-			insertStmt.executeUpdate();
-			return administrator;
-		} catch (SQLException e) {
-			e.printStackTrace();
-			throw e;
-		} finally {
-			if(connection != null) {
-				connection.close();
-			}
-			if(insertStmt != null) {
-				insertStmt.close();
-			}
-		}
-	}
+    private final static String TABLE_NAME = "Administrators";
+    private static AdministratorsDao instance = null;
 
-	/**
-	 * Update the LastName of the Administrators instance.
-	 * This runs a UPDATE statement.
-	 */
-	public Administrators updateUserName(Administrators administrator, String newUserName) throws SQLException {
-		// The field to update only exists in the superclass table, so we can
-		// just call the superclass method.
-		super.updateUserName(administrator, newUserName);
-		return administrator;
-	}
+    protected AdministratorsDao() {
+        super();
+    }
 
-	/**
-	 * Delete the Administrators instance.
-	 * This runs a DELETE statement.
-	 */
-	public Administrators delete(Administrators administrator) throws SQLException {
-		String deleteAdministrator = "DELETE FROM Administrators WHERE UserName=?;";
-		Connection connection = null;
-		PreparedStatement deleteStmt = null;
-		try {
-			connection = connectionManager.getConnection();
-			deleteStmt = connection.prepareStatement(deleteAdministrator);
-			deleteStmt.setString(1, administrator.getUserName());
-			deleteStmt.executeUpdate();
+    public static AdministratorsDao getInstance() {
+        if (instance == null) {
+            instance = new AdministratorsDao();
+        }
+        return instance;
+    }
 
-			// Then also delete from the superclass.
-			// Note: due to the fk constraint (ON DELETE CASCADE), we could simply call
-			// super.delete() without even needing to delete from Administrators first.
-			super.delete(administrator);
+    public Administrator create(Administrator administrator) throws SQLException {
+        create(new Person(administrator.getUsername()));
+        String insertAdministrator = "INSERT INTO " + TABLE_NAME + " (UserName) VALUES(?);";
+        try (
+          Connection connection = connectionManager.getConnection();
+          PreparedStatement insertStmt = connection.prepareStatement(insertAdministrator)
+        ) {
+            insertStmt.setString(1, administrator.getUsername());
+            insertStmt.executeUpdate();
+            return administrator;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+        }
+    }
 
-			return null;
-		} catch (SQLException e) {
-			e.printStackTrace();
-			throw e;
-		} finally {
-			if(connection != null) {
-				connection.close();
-			}
-			if(deleteStmt != null) {
-				deleteStmt.close();
-			}
-		}
-	}
-	
-	public Administrators getAdministratorFromUserName(String userName) throws SQLException {
-		// To build an Administrator object, we need the Persons record, too.
-		String selectAdministrator =
-			"SELECT Administrators.UserName AS UserName" +
-			"FROM Administrators INNER JOIN Persons " +
-			"  ON Administrators.UserName = Persons.UserName " +
-			"WHERE Administrators.UserName=?;";
-		Connection connection = null;
-		PreparedStatement selectStmt = null;
-		ResultSet results = null;
-		try {
-			connection = connectionManager.getConnection();
-			selectStmt = connection.prepareStatement(selectAdministrator);
-			selectStmt.setString(1, userName);
-			results = selectStmt.executeQuery();
-			if(results.next()) {
-				String resultUserName = results.getString("UserName");
-				Administrators administrator = new Administrators(resultUserName);
-				return administrator;
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-			throw e;
-		} finally {
-			if(connection != null) {
-				connection.close();
-			}
-			if(selectStmt != null) {
-				selectStmt.close();
-			}
-			if(results != null) {
-				results.close();
-			}
-		}
-		return null;
-	}
+    public Administrator updateUserName(Administrator administrator, String newUserName)
+      throws SQLException {
+        // The field to update only exists in the superclass table, so we can
+        // just call the superclass method.
+        Person person = super.updateUsername(administrator, newUserName);
+        return new Administrator(person.getUsername());
+    }
+
+    public Administrator delete(Administrator administrator) throws SQLException {
+        String deleteAdministrator = "DELETE FROM " + TABLE_NAME + " WHERE UserName=?;";
+        try (
+          Connection connection = connectionManager.getConnection();
+          PreparedStatement deleteStmt = connection.prepareStatement(deleteAdministrator)
+        ) {
+            deleteStmt.setString(1, administrator.getUsername());
+            deleteStmt.executeUpdate();
+
+            // Then also delete from the superclass.
+            // Note: due to the fk constraint (ON DELETE CASCADE), we could simply call
+            // super.delete() without even needing to delete from Administrator first.
+            super.delete(administrator);
+            return null;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw e;
+        }
+    }
+
+    public Administrator getAdministratorFromUserName(String userName) {
+        // To build an Administrator object, we need the Persons record, too.
+        String selectAdministrator =
+          "SELECT " + TABLE_NAME + ".UserName AS UserName " +
+            "FROM " + TABLE_NAME + " INNER JOIN Persons " +
+            "  ON " + TABLE_NAME + ".UserName = Persons.UserName " +
+            "WHERE " + TABLE_NAME + ".UserName=?;";
+        ResultSet results = null;
+        try (
+          Connection connection = connectionManager.getConnection();
+          PreparedStatement selectStmt = connection.prepareStatement(selectAdministrator)
+
+        ) {
+            selectStmt.setString(1, userName);
+            results = selectStmt.executeQuery();
+            if (results.next()) {
+                String resultUserName = results.getString("UserName");
+                Administrator administrator = new Administrator(resultUserName);
+                return administrator;
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            safeCloseResultSet(results);
+        }
+        return null;
+    }
 
 }

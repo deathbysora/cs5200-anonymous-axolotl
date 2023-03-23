@@ -1,9 +1,11 @@
-package BeerApp.model;
+package beerapp.model;
 
 public class Food {
+
     protected String foodName;
-    protected BeerStyles style;
-    public Food(String foodName, BeerStyles style) {
+    protected BeerStyle style;
+
+    public Food(String foodName, BeerStyle style) {
         this.foodName = foodName;
         this.style = style;
     }
@@ -16,11 +18,15 @@ public class Food {
         this.foodName = foodName;
     }
 
-    public BeerStyles getStyle() {
+    public BeerStyle getStyle() {
         return style;
     }
 
-    public void setStyle(BeerStyles style) {
-        this.style = style;
+    @Override
+    public String toString() {
+        return "Food{" +
+          "foodName='" + foodName + '\'' +
+          ", style=" + style +
+          '}';
     }
 }
