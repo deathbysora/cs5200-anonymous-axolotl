@@ -69,7 +69,7 @@ public class AdministratorsDao extends PersonsDao {
         }
     }
 
-    public Administrator getAdministratorFromUserName(String userName) {
+    public Administrator getAdministratorFromUserName(String userName) throws SQLException {
         // To build an Administrator object, we need the Persons record, too.
         String selectAdministrator =
           "SELECT " + TABLE_NAME + ".UserName AS UserName " +

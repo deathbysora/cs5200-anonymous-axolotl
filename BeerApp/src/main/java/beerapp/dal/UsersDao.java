@@ -31,7 +31,7 @@ public class UsersDao extends PersonsDao {
         return instance;
     }
 
-    public User create(User user) {
+    public User create(User user) throws SQLException {
         // Insert into the superclass table first.
         super.create(user);
 
@@ -48,14 +48,14 @@ public class UsersDao extends PersonsDao {
         }
     }
 
-    public User updateUserName(User user, String newUserName) {
+    public User updateUserName(User user, String newUserName) throws SQLException {
         // The field to update only exists in the superclass table, so we can
         // just call the superclass method.
         Person person = super.updateUsername(user, newUserName);
         return new User(person.getUsername());
     }
 
-    public User delete(User user) {
+    public User delete(User user) throws SQLException {
         String deleteUser = "DELETE FROM " + TABLE_NAME + " WHERE UserName=?;";
         try (
           Connection connection = connectionManager.getConnection();
@@ -76,7 +76,7 @@ public class UsersDao extends PersonsDao {
         }
     }
 
-    public User getUserFromUserName(String userName) {
+    public User getUserFromUserName(String userName) throws SQLException {
         String selectUser =
           "SELECT " + TABLE_NAME + ".UserName AS UserName " +
             "FROM " + TABLE_NAME + " INNER JOIN Persons " +

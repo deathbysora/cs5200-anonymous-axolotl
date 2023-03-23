@@ -31,6 +31,10 @@ public class BeerReview {
         this.beer = beer;
     }
 
+    public BeerReview(Integer reviewId) {
+        this.reviewId = reviewId;
+    }
+
     public BeerReview(Float appearance, Float aroma, Float palate, Float taste,
       Float overall, Date created, String text, User user, Beer beer) {
         this.appearance = appearance;

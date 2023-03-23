@@ -25,7 +25,7 @@ public class PersonsDao {
         return instance;
     }
 
-    public Person create(Person person) {
+    public Person create(Person person) throws SQLException {
         String insertPerson = "INSERT INTO " + TABLE_NAME + " (UserName) VALUES(?);";
         try (
           Connection connection = connectionManager.getConnection();
@@ -39,7 +39,7 @@ public class PersonsDao {
         }
     }
 
-    public Person updateUsername(Person person, String newUsername) {
+    public Person updateUsername(Person person, String newUsername) throws SQLException {
         String updatePerson = "UPDATE " + TABLE_NAME + " SET UserName=? WHERE UserName=?;";
         try (
           Connection connection = connectionManager.getConnection();
@@ -69,7 +69,7 @@ public class PersonsDao {
         }
     }
 
-    public Person getPersonByUserName(String userName) {
+    public Person getPersonByUsername(String userName) throws SQLException {
         String selectPerson = "SELECT UserName FROM " + TABLE_NAME + " WHERE UserName=?;";
         ResultSet result = null;
         try (
