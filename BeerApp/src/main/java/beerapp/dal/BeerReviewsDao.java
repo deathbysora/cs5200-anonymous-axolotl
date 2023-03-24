@@ -2,6 +2,7 @@ package beerapp.dal;
 
 import static beerapp.dal.Utility.safeCloseResultSet;
 
+import beerapp.model.Beer;
 import beerapp.model.BeerReview;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -198,5 +199,80 @@ public class BeerReviewsDao {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public BeerReview findAverageReviewOf(Beer beer) {
+        String query = "SELECT beerid, AVG(appearance) as appearance, AVG(aroma) as aroma, AVG(palate) as palate, AVG(taste) as taste " +
+          "FROM " + TABLE_NAME + " WHERE beerid=? GROUP BY beerid;";
+        ResultSet result = null;
+        try (
+          Connection connection = connectionManager.getConnection();
+          PreparedStatement statement = connection.prepareStatement(query);
+          ) {
+            statement.setInt(1, beer.getId());
+            result = statement.executeQuery();
+            if (result.next()) {
+                BeerReview review = new BeerReview(
+                  null,
+                  result.getFloat("appearance"),
+                  result.getFloat("aroma"),
+                  result.getFloat("palate"),
+                  result.getFloat("taste"),
+                  0f,
+                  null,
+                  null,
+                  null,
+                  null
+                );
+                return review;
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            safeCloseResultSet(result);
+        }
+        return null;
+    }
+
+    public List<BeerReview> findSimilarReviews(BeerReview review, int limit) {
+        List<BeerReview> reviews = new ArrayList<>();
+        String query = "SELECT beerid, AVG(appearance) as appearance, AVG(aroma) as aroma, AVG(palate) as palate, AVG(taste) as taste " +
+          "FROM " + TABLE_NAME + " " +
+          "WHERE (" +
+          "ABS(Appearance-?)<=1 AND ABS(Aroma-?)<=1 " +
+          "AND ABS(Palate-?)<=1 AND ABS(Taste-?)<=1) " +
+          "GROUP BY beerid " +
+          "LIMIT ?;";
+        ResultSet result = null;
+        try (
+          Connection connection = connectionManager.getConnection();
+          PreparedStatement statement = connection.prepareStatement(query);
+        ) {
+            statement.setFloat(1, review.getAppearance());
+            statement.setFloat(2, review.getAroma());
+            statement.setFloat(3, review.getPalate());
+            statement.setFloat(4, review.getTaste());
+            statement.setInt(5, limit);
+            result = statement.executeQuery();
+            while (result.next()) {
+                reviews.add(new BeerReview(
+                  result.getInt("beerid"),
+                  result.getFloat("appearance"),
+                  result.getFloat("aroma"),
+                  result.getFloat("palate"),
+                  result.getFloat("taste"),
+                  0f,
+                  null,
+                  null,
+                  null,
+                  null
+                ));
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            safeCloseResultSet(result);
+        }
+        return reviews;
     }
 }
