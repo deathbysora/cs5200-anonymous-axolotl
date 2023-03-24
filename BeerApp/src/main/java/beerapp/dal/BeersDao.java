@@ -155,7 +155,7 @@ public class BeersDao {
      * @return a list of beers (could be just one or null) which the metrics are similar to the
      * recommended beer.
      */
-    public List<BeerReview> getSimilarBeers(Beer beer) throws SQLException {
+    public List<BeerReview> getSimilarBeers(Beer beer) {
 
         List<BeerReview> resultSet = new ArrayList<>();
         ResultSet results = null;
