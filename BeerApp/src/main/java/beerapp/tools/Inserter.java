@@ -2,11 +2,13 @@ package beerapp.tools;
 
 import beerapp.dal.AdministratorsDao;
 import beerapp.dal.BeerStylesDao;
+import beerapp.dal.BeersDao;
 import beerapp.dal.BrewersDao;
 import beerapp.dal.FoodDao;
 import beerapp.dal.PersonsDao;
 import beerapp.dal.UsersDao;
 import beerapp.model.Administrator;
+import beerapp.model.Beer;
 import beerapp.model.BeerStyle;
 import beerapp.model.Brewer;
 import beerapp.model.Food;
@@ -112,6 +114,9 @@ public class Inserter {
         foodDao.getFoodByName("f3").forEach((f) -> foodDao.delete(f));
         beerStyleDao.delete(beerStyleDao.getBeerStyle("bs2"));
         beerStyleDao.delete(beerStyleDao.getBeerStyle("bs3"));
+
+        mockBrewers();
+        mockFindSimilarBeers();
     }
 
     private static void mockBrewers() {
@@ -136,5 +141,12 @@ public class Inserter {
         brewersDao.delete(brewer2);
         brewersDao.delete(b1);
         brewersDao.delete(b3);
+    }
+
+    private static void mockFindSimilarBeers() {
+        BeersDao beersDao = BeersDao.getInstance();
+        Beer beer = new Beer(2, "Abeta Amber Lager", Float.valueOf(5), 1, new BeerStyle("Vienna"));
+
+        beersDao.getSimilarBeers(beer).forEach((b) -> System.out.println(b.getBeer()));
     }
 }

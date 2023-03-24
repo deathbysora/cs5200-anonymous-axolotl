@@ -3,6 +3,7 @@ package beerapp.dal;
 import static beerapp.dal.Utility.safeCloseResultSet;
 
 import beerapp.model.Beer;
+import beerapp.model.BeerReview;
 import beerapp.model.BeerStyle;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -144,5 +145,51 @@ public class BeersDao {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    /**
+     * User can get a list of similar beer recommendations based on the beer
+     * they selected. 
+     * 
+     * @param beer the beer object that user selected
+     * @return a list of beers (could be just one or null) which the metrics are similar to the
+     * recommended beer.
+     */
+    public List<BeerReview> getSimilarBeers(Beer beer) {
+
+        List<BeerReview> resultSet = new ArrayList<>();
+        ResultSet results = null;
+        //BeerReviewsDao beerReviewsDao = BeerReviewsDao.getInstance();
+
+        String beersLookupSQL = 
+        "SELECT * FROM " +
+        "(" +
+            "SELECT BeerReview.BeerID as ID, AVG(BeerReview.Appearance) as Appearance, AVG(BeerReview.Aroma) as Aroma," +
+            "    AVG(BeerReview.Palate) as Palate, AVG(BeerReview.Taste) as Taste, AVG(BeerReview.Overall) as Overall" +
+            "FROM BeerReview " +
+            "WHERE BeerReview.BeerID = ? " +
+            "GROUP BY ID, Appearance, Aroma, Palate, Taste, Overall" +
+        ") AS T INNER JOIN BeerReview ON T.BeerId = BeerReview.BeerId" +
+        "WHERE (" + 
+            "ABS(T.Appearance - BeerReview.Appearance) <=1 AND ABS(T.Aroma - BeerReview.Aroma) <= 1 " +
+            "AND ABS(T.Palate - BeerReview.Palate)<=1 AND ABS(T.Taste - BeerReview.Taste)<= 1 " +
+            "AND ABS(T.Overall - BeerReview.Overall)<=1" +
+        ") LIMIT 5;";
+
+        try (
+            Connection connection = connectionManager.getConnection();
+            PreparedStatement statement = connection.prepareStatement(beersLookupSQL);
+        ) {
+            statement.setInt(1, beer.getId());
+            results = statement.executeQuery();
+            while (results.next()) {
+                resultSet.add(BeerReviewsDao.deserializeReview(results));
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            safeCloseResultSet(results);
+        }
+        return resultSet;
     }
 }
