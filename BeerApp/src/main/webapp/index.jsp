@@ -10,5 +10,6 @@
 <br/>
 <a href="hello-servlet">Hello Servlet</a>
 <a href="usercreate">Create a User</a>
+<a href="findusers">Find a User</a>
 </body>
 </html>
