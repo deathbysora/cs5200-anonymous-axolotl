@@ -10,6 +10,7 @@ import java.sql.SQLException;
 
 public class BrewersDao {
 
+    private final static String TABLE_NAME = "brewers";
     private static BrewersDao instance = null;
     private final ConnectionManager connectionManager;
 
@@ -25,7 +26,7 @@ public class BrewersDao {
     }
 
     public Brewer create(Brewer brewer) {
-        String insertBrewer = "INSERT INTO Brewer(BrewerId) VALUES(?);";
+        String insertBrewer = "INSERT INTO " + TABLE_NAME + " (BrewerId) VALUES(?);";
         try (
           Connection connection = connectionManager.getConnection();
           PreparedStatement insertStmt = connection.prepareStatement(insertBrewer)
@@ -39,7 +40,7 @@ public class BrewersDao {
     }
 
     public Brewer getBrewerById(int brewerId) {
-        String selectBrewer = "SELECT BrewerId FROM Brewer WHERE BrewerId=?;";
+        String selectBrewer = "SELECT BrewerId FROM " + TABLE_NAME + " WHERE BrewerId=?;";
         ResultSet results = null;
         try (
           Connection connection = connectionManager.getConnection();
@@ -60,7 +61,7 @@ public class BrewersDao {
     }
 
     public Brewer updateBrewerId(Brewer brewer, int newBrewerId) {
-        String updateBrewer = "UPDATE Brewer SET BrewerId=? WHERE BrewerId=?;";
+        String updateBrewer = "UPDATE " + TABLE_NAME + " SET BrewerId=? WHERE BrewerId=?;";
         try (
           Connection connection = connectionManager.getConnection();
           PreparedStatement updateStmt = connection.prepareStatement(updateBrewer)
@@ -75,7 +76,7 @@ public class BrewersDao {
     }
 
     public Brewer delete(Brewer brewer) {
-        String deleteBrewer = "DELETE FROM Brewer WHERE BrewerId=?;";
+        String deleteBrewer = "DELETE FROM " + TABLE_NAME + " WHERE BrewerId=?;";
         try (
           Connection connection = connectionManager.getConnection();
           PreparedStatement deleteStmt = connection.prepareStatement(deleteBrewer)
