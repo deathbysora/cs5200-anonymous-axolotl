@@ -13,6 +13,7 @@ import java.util.List;
 
 public class BeerReviewsDao {
 
+    private final static String TABLE_NAME = "BeerReviews";
     // Set up connections
     private static BeerReviewsDao instance = null;
     protected ConnectionManager connectionManager;
@@ -59,7 +60,7 @@ public class BeerReviewsDao {
     public BeerReview create(BeerReview review) {
         // initialize the sql statement
         String createReviewSQL =
-          "INSERT INTO BeerReviews(Appearance, Aroma, Palate, Taste," +
+          "INSERT INTO " + TABLE_NAME + " (Appearance, Aroma, Palate, Taste," +
             " Overall, Created, Text, UserName, BeerID) VALUES(?,?,?,?,?,?,?,?,?);";
         ResultSet resultKey = null;
         try (
@@ -109,7 +110,7 @@ public class BeerReviewsDao {
      * Look up a review by its ID
      */
     public BeerReview getReviewById(int reviewId) {
-        String lookUpSQL = "SELECT * FROM BeerReviews WHERE ReviewId=?;";
+        String lookUpSQL = "SELECT * FROM " + TABLE_NAME + " WHERE ReviewId=?;";
         ResultSet results = null;
         try (
           Connection connection = connectionManager.getConnection();
@@ -137,7 +138,7 @@ public class BeerReviewsDao {
      */
     public List<BeerReview> getReviewsByUserName(String userName) {
         List<BeerReview> resultsReview = new ArrayList<>();
-        String lookUpSQL = "SELECT * FROM BeerReviews WHERE UserName=?;";
+        String lookUpSQL = "SELECT * FROM " + TABLE_NAME + " WHERE UserName=?;";
         ResultSet results = null;
         try (
           Connection connection = connectionManager.getConnection();
@@ -162,7 +163,7 @@ public class BeerReviewsDao {
      */
     public List<BeerReview> getReviewsByBeerId(int beerId) {
         List<BeerReview> resultsReview = new ArrayList<>();
-        String lookUpSQL = "SELECT * FROM BeerReviews WHERE RestaurantId=?;";
+        String lookUpSQL = "SELECT * FROM " + TABLE_NAME + " WHERE RestaurantId=?;";
         ResultSet results = null;
 
         try (
@@ -186,7 +187,7 @@ public class BeerReviewsDao {
      * Delete a review
      */
     public BeerReview delete(BeerReview review) {
-        String deleteSQL = "DELETE FROM BeerReviews WHERE ReviewID=?";
+        String deleteSQL = "DELETE FROM " + TABLE_NAME + " WHERE ReviewID=?";
         try (
           Connection connection = connectionManager.getConnection();
           PreparedStatement deleteStatement = connection.prepareStatement(deleteSQL)
