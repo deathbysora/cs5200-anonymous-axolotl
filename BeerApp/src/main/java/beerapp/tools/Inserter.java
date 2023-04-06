@@ -21,7 +21,7 @@ public class Inserter {
     public static void main(String[] args) throws SQLException {
        mockApp();
        mockBrewers();
-        mockFindSimilarBeers();
+       mockFindSimilarBeers();
     }
 
     private static void mockApp() throws SQLException {
@@ -106,7 +106,7 @@ public class Inserter {
 
 
         // Insert BeerStyle & Food
-        BeerStyle beerStyle1 = new BeerStyle("Belgian Ale");
+        BeerStyle beerStyle1 = new BeerStyle("smaller");
         beerStyle1 = beerStyleDao.create(beerStyle1);
         BeerStyle beerStyle2 = new BeerStyle("Larger");
         beerStyle2 = beerStyleDao.create(beerStyle2);
@@ -117,7 +117,7 @@ public class Inserter {
         food2 = foodDao.create(food2);
 
         // Read BeerStyles & Food
-        BeerStyle bs1 = beerStyleDao.getBeerStyle("Belgian Ale");
+        BeerStyle bs1 = beerStyleDao.getBeerStyle("smaller");
         System.out.format("Successfully created and reading beerStyle: s:%s \n",
           bs1.getStyle());
 
@@ -142,27 +142,29 @@ public class Inserter {
         foodDao.getFoodByName("pizza").forEach((f) -> foodDao.delete(f));
     }
     private static void mockBrewers() {
+        System.out.println();
         BrewersDao brewersDao = BrewersDao.getInstance();
 
         // INSERT objects from our model.
         Brewer brewer1 = new Brewer(1234);
         brewer1 = brewersDao.create(brewer1);
-        Brewer brewer2 = new Brewer(5678);
+        Brewer brewer2 = new Brewer(5678123);
         brewer2 = brewersDao.create(brewer2);
 
         // READ.
         Brewer b1 = brewersDao.getBrewerById(1234);
-        System.out.println(b1.getBrewerId());
+        System.out.println("Successfully created and read brewer: " + b1.getBrewerId());
 
         // Update.
-        Brewer b3 = brewersDao.updateBrewerId(b1, 5678);
-        System.out.println(b3.getBrewerId());
+        Brewer b3 = brewersDao.updateBrewerId(b1, 56781234);
+        System.out.println("Successfully created and read brewer: " + b3.getBrewerId());
 
         // Delete.
         brewersDao.delete(brewer1);
         brewersDao.delete(brewer2);
         brewersDao.delete(b1);
         brewersDao.delete(b3);
+        System.out.println();
     }
 
     private static void mockFindSimilarBeers() {

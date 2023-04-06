@@ -11,7 +11,7 @@
 <title>Find a User</title>
 </head>
 <body>
-	<form action="findSimilarBeer" method="post">
+	<form action="findsimilarbeer" method="post">
 		<h1>Find similar beer review by their average rating</h1>
 		<p>
 			<label for="beerId">BeerId</label>
@@ -23,15 +23,12 @@
 			<span id="successMessage"><b>${messages.success}</b></span>
 		</p>
 	</form>
-	<br/>
-	<div id="userCreate"><a href="usercreate">To another link: Create User</a></div>
-	<br/>
 	<h1>Result: Matching Review</h1>
         <table border="1">
             <tr>
                 <th>BeerName</th>
             </tr>
-            <c:forEach items="${similarReview}" var="review" >
+            <c:forEach items="${beers}" var="beer" >
                 <tr>
                     <td><c:out value="${beer.getName()}" /></td>
                 </tr>

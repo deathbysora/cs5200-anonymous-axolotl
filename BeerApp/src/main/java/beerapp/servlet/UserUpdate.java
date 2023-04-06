@@ -77,7 +77,7 @@ public class UserUpdate extends HttpServlet {
         	        	messages.put("success", "Successfully updated " + userName);
         	        }
         		}
-        		req.setAttribute("blogUser", user);
+        		req.setAttribute("user", user);
         	} catch (SQLException e) {
 				e.printStackTrace();
 				throw new IOException(e);

@@ -31,11 +31,11 @@
             <tr>
                 <th>UserName</th>
             </tr>
-            <c:forEach items="${user}" var="user" >
+            <c:forEach items="${users}" var="user">
                 <tr>
-                    <td><c:out value="${blogUser.getUserName()}" /></td>
-                    <td><a href="userdelete?username=<c:out value="${blogUser.getUserName()}"/>">Delete</a></td>
-                    <td><a href="userupdate?username=<c:out value="${blogUser.getUserName()}"/>">Update</a></td>
+                    <td><c:out value="${user.getUsername()}" /></td>
+                    <td><a href="userdelete?username=<c:out value="${user.getUsername()}"/>">Delete</a></td>
+                    <td><a href="userupdate?username=<c:out value="${user.getUsername()}"/>">Update</a></td>
                 </tr>
             </c:forEach>
        </table>
