@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 
 public class BeersDao {
 
-    private final static String TABLE_NAME = "beers";
+    public final static String TABLE_NAME = "beers";
     private static BeersDao instance;
     protected ConnectionManager connectionManager;
 
@@ -163,4 +163,35 @@ public class BeersDao {
         return reviews.stream().map((r) -> getBeerById(r.getId())).collect(Collectors.toList());
     }
 
+    /**
+     * Query {@value BeersDao#TABLE_NAME} and paginate beers whose BeerName matches the given
+     * {@code pattern}.
+     *
+     * @param pattern the pattern to search for.
+     * @param pageSize the number of results to return.
+     * @param pageNumber the page number of the results to return.
+     * @return a list of beers who match the given {@code pattern} on the {@code pageNumber}.
+     */
+    public List<Beer> getBeersLikeName(String pattern, int pageSize, int pageNumber) {
+        int offset = (pageNumber * pageSize) - pageSize;
+        String query = "SELECT * FROM " + TABLE_NAME + " WHERE BeerName REGEXP " + pattern + " LIMIT "
+          + offset + ',' + pageSize + ';';
+
+        List<Beer> beers = new ArrayList<>();
+        ResultSet result = null;
+        try (
+          Connection connection = connectionManager.getConnection();
+          PreparedStatement statement = connection.prepareStatement(query);
+          ) {
+            result = statement.executeQuery();
+            while (result.next()) {
+                beers.add(deserializeResult(result));
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            safeCloseResultSet(result);
+        }
+        return beers;
+    }
 }
