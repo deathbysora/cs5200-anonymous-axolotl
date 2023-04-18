@@ -11,6 +11,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import com.google.gson.Gson;
 
 @WebServlet("/getTopBeersByWinterReviews")
 public class GetTopBeersByWinterReviews extends HttpServlet {
@@ -38,8 +39,17 @@ public class GetTopBeersByWinterReviews extends HttpServlet {
             throw new IOException(e);
         }
 
-        req.setAttribute("beerNames", beerNames);
-        req.getRequestDispatcher("GetTopBeersByWinterReviews.jsp").forward(req, resp);
+        String json = new Gson().toJson(beerNames);
+        resp.setContentType("application/json");
+        resp.setCharacterEncoding("UTF-8");
+        try {
+            resp.getWriter().write(json);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        // req.setAttribute("beerNames", beerNames);
+        // req.getRequestDispatcher("GetTopBeersByWinterReviews.jsp").forward(req, resp);
     }
 
     @Override

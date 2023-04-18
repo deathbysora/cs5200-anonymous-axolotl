@@ -7,6 +7,7 @@ import beerapp.model.BeerReview;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -28,6 +29,13 @@ public class GetUserRecommendations extends HttpServlet {
         beerReviewsDao = BeerReviewsDao.getInstance();
     }
 
+    /**
+     * @return true if all keys exist within {@link HttpServletRequest#getParameterMap()}.
+     */
+    private static boolean requestContainsParameters(HttpServletRequest request, String... keys) {
+        return Arrays.stream(keys).allMatch(key -> request.getParameterMap().containsKey(key));
+    }
+
     @Override
     public void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
@@ -35,6 +43,11 @@ public class GetUserRecommendations extends HttpServlet {
         // Map<String, String> messages = new HashMap<>();
         // req.setAttribute("messages", messages);
         List<List<String>> top10Recs = new ArrayList<>();
+
+        if (!requestContainsParameters(req, "aroma", "palate", "taste", "appearance")) {
+            throw new RuntimeException(
+              "some parameters are missing. View the docs for a list of necessary parameters.");
+        }
 
         try {
             int aroma = Integer.parseInt(req.getParameter("aroma"));
