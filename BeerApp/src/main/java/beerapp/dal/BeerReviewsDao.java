@@ -368,6 +368,34 @@ public class BeerReviewsDao {
         return beerNames;
     }
 
+    public List<String> getTopBeersCountsByLager() {
+        List<String> beerNames = new ArrayList<>();
+        String selectBeers =
+                "SELECT Beer.BeerName, COUNT(BeerReviews.ReviewId) AS review_count " +
+                "FROM Beer " +
+                "INNER JOIN BeerReviews ON Beer.BeerId = BeerReviews.BeerId " +
+                "WHERE Beer.Style LIKE '%lager%' " +
+                "GROUP BY Beer.BeerId " +
+                "ORDER BY review_count DESC " +
+                "LIMIT 10;";
+
+        ResultSet resultSet = null;
+        try (Connection connection = connectionManager.getConnection();
+             PreparedStatement selectStmt = connection.prepareStatement(selectBeers)) {
+            resultSet = selectStmt.executeQuery();
+
+            while (resultSet.next()) {
+                beerNames.add(resultSet.getString("BeerName"));
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            safeCloseResultSet(resultSet);
+        }
+
+        return beerNames;
+    }
+
     public List<String> getTopBeersByWinterReviews() {
         List<String> beers = new ArrayList<>();
         String selectBeers =
@@ -396,11 +424,11 @@ public class BeerReviewsDao {
     public List<String> getTopBeersBySummerReviews() {
         List<String> beers = new ArrayList<>();
         String selectBeers =
-                "SELECT Beer.BeerName, COUNT(BeerReviews.ReviewId) AS review_count " +
-                "FROM Beer " +
-                "INNER JOIN BeerReviews ON Beer.BeerId = BeerReviews.BeerId " +
+                "SELECT Beers.BeerName, COUNT(BeerReviews.ReviewId) AS review_count " +
+                "FROM Beers " +
+                "INNER JOIN BeerReviews ON Beers.BeerId = BeerReviews.BeerId " +
                 "WHERE MONTH(BeerReviews.Created) IN (6, 7, 8) " +
-                "GROUP BY Beer.BeerId " +
+                "GROUP BY Beers.BeerId " +
                 "ORDER BY review_count DESC " +
                 "LIMIT 10;";
 
