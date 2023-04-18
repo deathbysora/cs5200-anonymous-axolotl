@@ -333,5 +333,55 @@ public class BeerReviewsDao {
         return beerNames;
     }
 
+    public List<String> getTopBeersByWinterReviews() {
+        List<String> beers = new ArrayList<>();
+        String selectBeers =
+                "SELECT Beer.BeerName, COUNT(BeerReviews.ReviewId) AS review_count " +
+                "FROM Beer " +
+                "INNER JOIN BeerReviews ON Beer.BeerId = BeerReviews.BeerId " +
+                "WHERE MONTH(BeerReviews.Created) IN (12, 1, 2) " +
+                "GROUP BY Beer.BeerId " +
+                "ORDER BY review_count DESC " +
+                "LIMIT 10;";
+
+        try (Connection connection = connectionManager.getConnection();
+             PreparedStatement selectStmt = connection.prepareStatement(selectBeers)) {
+            ResultSet resultSet = selectStmt.executeQuery();
+
+            while (resultSet.next()) {
+                beers.add(resultSet.getString("BeerName"));
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return beers;
+    }
+
+    public List<String> getTopBeersBySummerReviews() {
+        List<String> beers = new ArrayList<>();
+        String selectBeers =
+                "SELECT Beer.BeerName, COUNT(BeerReviews.ReviewId) AS review_count " +
+                "FROM Beer " +
+                "INNER JOIN BeerReviews ON Beer.BeerId = BeerReviews.BeerId " +
+                "WHERE MONTH(BeerReviews.Created) IN (6, 7, 8) " +
+                "GROUP BY Beer.BeerId " +
+                "ORDER BY review_count DESC " +
+                "LIMIT 10;";
+
+        try (Connection connection = connectionManager.getConnection();
+             PreparedStatement selectStmt = connection.prepareStatement(selectBeers)) {
+            ResultSet resultSet = selectStmt.executeQuery();
+
+            while (resultSet.next()) {
+                beers.add(resultSet.getString("BeerName"));
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return beers;
+    }
+
 
 }
