@@ -1,7 +1,6 @@
 package beerapp.servlet;
 
 import beerapp.dal.BeersCountDao;
-import beerapp.model.BeersCount;
 import java.io.IOException;
 import java.sql.SQLException;
 import javax.servlet.ServletException;

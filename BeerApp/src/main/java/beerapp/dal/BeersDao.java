@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 
 public class BeersDao {
 
-    private final static String TABLE_NAME = "beers";
+    public final static String TABLE_NAME = "beers";
     private static BeersDao instance;
     protected ConnectionManager connectionManager;
 
@@ -92,6 +92,30 @@ public class BeersDao {
 
     public List<Beer> getBeersByStyle(BeerStyle style) {
         String query = "SELECT * FROM " + TABLE_NAME + " WHERE style=?;";
+        List<Beer> beers = new ArrayList<>();
+        ResultSet result = null;
+        try (
+          Connection connection = connectionManager.getConnection();
+          PreparedStatement statement = connection.prepareStatement(query)
+        ) {
+            statement.setString(1, style.getStyle());
+            result = statement.executeQuery();
+            while (result.next()) {
+                beers.add(deserializeResult(result));
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            safeCloseResultSet(result);
+        }
+        return beers;
+    }
+
+    /**
+     * Query to get a list of beers with certain style matching the given {@code searchStyle}
+     */
+    public List<Beer> getBeersLikeStyle(BeerStyle style, String searchStyle) {
+        String query = "SELECT * FROM " + TABLE_NAME + " WHERE style LIKE '%" + searchStyle + "%';";
         List<Beer> beers = new ArrayList<>();
         ResultSet result = null;
         try (

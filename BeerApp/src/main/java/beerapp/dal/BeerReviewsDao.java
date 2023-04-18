@@ -14,7 +14,7 @@ import java.util.List;
 
 public class BeerReviewsDao {
 
-    private final static String TABLE_NAME = "BeerReviews";
+    public final static String TABLE_NAME = "BeerReviews";
     // Set up connections
     private static BeerReviewsDao instance = null;
     protected ConnectionManager connectionManager;
