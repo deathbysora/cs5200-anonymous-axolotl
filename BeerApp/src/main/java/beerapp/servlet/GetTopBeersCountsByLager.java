@@ -22,7 +22,8 @@ public class GetTopBeersCountsByLager extends HttpServlet {
   @Override
   public void doGet(HttpServletRequest req, HttpServletResponse resp) {
     String topN = req.getParameter("topN");
-    request.setAttribute("topBeers", beersCountDao.getTopBeersCountsByLager(topN));
+    request.setAttribute("topBeers",
+        BeersCountDao.getTopBeerNamesFromBeersCount(beersCountDao.getTopBeersCountsByLager(topN)));
   }
 
 }

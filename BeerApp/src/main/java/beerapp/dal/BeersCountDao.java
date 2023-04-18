@@ -51,4 +51,17 @@ public enum BeersCountDao {
           safeCloseResultSet(results);
       }
     }
+
+  /**
+   *
+   * @param beersCounts a list of {@link BeersCount}
+   * @return a list of beerNames corresponding to the {@link BeersCount}
+   */
+  public static List<String> getTopBeerNamesFromBeersCount(List<BeersCount> beersCounts) {
+      List<String> beerNamesRes = new ArrayList<>();
+      for (BeersCount beersCount : beersCounts) {
+        beerNamesRes.add(beersCount.getBeerName());
+      }
+      return beerNamesRes;
+    }
 }
