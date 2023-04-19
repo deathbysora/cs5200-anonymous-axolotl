@@ -380,10 +380,10 @@ public class BeerReviewsDao {
     public List<List<String>> getPersonalizedBeerRecommendations(int palate, int taste, int aroma, int appearance) {
 
         List<List<String>> resultList = new ArrayList<>();
-        int palateInput = 5;
-        int tasteInput = 1;
-        int aromaInput = 8;
-        int appearanceInput = 9;
+        int palateInput = palate;
+        int tasteInput = taste;
+        int aromaInput = aroma;
+        int appearanceInput = appearance;
 
         String query = "SELECT BeerReviews.BeerID, Beers.BeerName, count(*) AS count," +
                 " AVG(Appearance) AS appearance_avg, AVG(Aroma) AS aroma_avg," +
