@@ -42,12 +42,15 @@ public class GetTopBeersBySummerReviews extends HttpServlet {
         String json = new Gson().toJson(beerNames);
         resp.setContentType("application/json");
         resp.setCharacterEncoding("UTF-8");
+        resp.setHeader("Access-Control-Allow-Origin", "http://localhost:3000");
+        resp.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, DELETE");
+        resp.setHeader("Access-Control-Max-Age", "3600");
+        resp.setHeader("Access-Control-Allow-Headers", "Access-Control-Allow-Origin");
         try {
             resp.getWriter().write(json);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-
         // req.setAttribute("beerNames", beerNames);
         // req.getRequestDispatcher("GetTopBeersBySummerReviews.jsp").forward(req, resp);
     }
