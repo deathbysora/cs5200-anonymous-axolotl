@@ -64,6 +64,10 @@ public class GetUserRecommendations extends HttpServlet {
         String json = new Gson().toJson(top10Recs);
         resp.setCharacterEncoding("UTF-8");
         resp.getWriter().write(json);
+        resp.setHeader("Access-Control-Allow-Origin", "http://localhost:3000");
+        resp.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, DELETE");
+        resp.setHeader("Access-Control-Max-Age", "3600");
+        resp.setHeader("Access-Control-Allow-Headers", "Access-Control-Allow-Origin");
 
     }
 }

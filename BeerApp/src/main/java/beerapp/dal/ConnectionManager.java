@@ -8,8 +8,8 @@ import java.util.Properties;
 public class ConnectionManager {
 
     private final String user = "root";
-    private final String password = "351561449";
-    private final String hostName = "localhost";
+    private final String password = "Password123!";
+    private final String hostName = "127.0.0.1";
     private final int port = 3306;
     private final String schema = "beerapp";
     private final String timezone = "UTC";

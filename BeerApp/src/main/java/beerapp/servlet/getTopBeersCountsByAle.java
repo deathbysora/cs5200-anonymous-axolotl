@@ -41,6 +41,10 @@ public class getTopBeersCountsByAle extends HttpServlet {
         String json = new Gson().toJson(beerNames);
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
+        response.setHeader("Access-Control-Allow-Origin", "http://localhost:3000");
+        response.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, DELETE");
+        response.setHeader("Access-Control-Max-Age", "3600");
+        response.setHeader("Access-Control-Allow-Headers", "Access-Control-Allow-Origin");
         try {
             response.getWriter().write(json);
         } catch (IOException e) {
