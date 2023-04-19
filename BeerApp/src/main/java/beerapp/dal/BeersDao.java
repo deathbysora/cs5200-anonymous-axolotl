@@ -174,7 +174,7 @@ public class BeersDao {
      */
     public List<Beer> getBeersLikeName(String pattern, int pageSize, int pageNumber) {
         int offset = (pageNumber * pageSize) - pageSize;
-        String query = "SELECT * FROM " + TABLE_NAME + " WHERE BeerName REGEXP " + pattern + " LIMIT "
+        String query = "SELECT * FROM " + TABLE_NAME + " WHERE BeerName REGEXP \"" + pattern + "\" ORDER BY BeerName LIMIT "
           + offset + ',' + pageSize + ';';
 
         List<Beer> beers = new ArrayList<>();
