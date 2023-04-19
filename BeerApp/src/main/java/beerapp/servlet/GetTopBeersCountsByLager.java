@@ -13,8 +13,8 @@ import java.util.List;
 import java.util.Map;
 import com.google.gson.Gson;
 
-@WebServlet("/getTopBeersCountsByAle")
-public class getTopBeersCountsByAle extends HttpServlet {
+@WebServlet("/getTopBeersCountsByLager")
+public class GetTopBeersCountsByLager extends HttpServlet {
 
     private BeerReviewsDao beerReviewsDao;
 
@@ -29,7 +29,7 @@ public class getTopBeersCountsByAle extends HttpServlet {
         request.setAttribute("messages", messages);
         List<String> beerNames = new ArrayList<>();
         try {
-            beerNames = beerReviewsDao.getTopBeersCountsByAle();
+            beerNames = beerReviewsDao.getTopBeersCountsByLager();
             request.setAttribute("beerNames", beerNames);
             messages.put("success", "Top 10 Ale beers have been retrieved.");
             // request.getRequestDispatcher("/displayAle.jsp").forward(request, response);

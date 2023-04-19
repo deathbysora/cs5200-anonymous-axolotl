@@ -35,17 +35,16 @@ public class BeerReviewsDao {
         BeersDao beersDao = BeersDao.getInstance();
         try {
             return new BeerReview(
-              result.getInt("ReviewId"),
-              result.getFloat("Appearance"),
-              result.getFloat("Aroma"),
-              result.getFloat("Palate"),
-              result.getFloat("Taste"),
-              result.getFloat("Overall"),
-              result.getDate("Created"),
-              result.getString("Text"),
-              usersDao.getUserFromUserName(result.getString("UserName")),
-              beersDao.getBeerById(result.getInt("BeerId"))
-            );
+                    result.getInt("ReviewId"),
+                    result.getFloat("Appearance"),
+                    result.getFloat("Aroma"),
+                    result.getFloat("Palate"),
+                    result.getFloat("Taste"),
+                    result.getFloat("Overall"),
+                    result.getDate("Created"),
+                    result.getString("Text"),
+                    usersDao.getUserFromUserName(result.getString("UserName")),
+                    beersDao.getBeerById(result.getInt("BeerId")));
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -60,15 +59,13 @@ public class BeerReviewsDao {
      */
     public BeerReview create(BeerReview review) {
         // initialize the sql statement
-        String createReviewSQL =
-          "INSERT INTO " + TABLE_NAME + " (Appearance, Aroma, Palate, Taste," +
-            " Overall, Created, Text, UserName, BeerID) VALUES(?,?,?,?,?,?,?,?,?);";
+        String createReviewSQL = "INSERT INTO " + TABLE_NAME + " (Appearance, Aroma, Palate, Taste," +
+                " Overall, Created, Text, UserName, BeerID) VALUES(?,?,?,?,?,?,?,?,?);";
         ResultSet resultKey = null;
         try (
-          Connection connection = connectionManager.getConnection();
-          PreparedStatement insertStmt = connection.prepareStatement(createReviewSQL,
-            Statement.RETURN_GENERATED_KEYS)
-        ) {
+                Connection connection = connectionManager.getConnection();
+                PreparedStatement insertStmt = connection.prepareStatement(createReviewSQL,
+                        Statement.RETURN_GENERATED_KEYS)) {
             insertStmt.setFloat(1, review.getAppearance());
             insertStmt.setFloat(2, review.getAroma());
             insertStmt.setFloat(3, review.getPalate());
@@ -89,17 +86,16 @@ public class BeerReviewsDao {
                 throw new RuntimeException("Unable to retrieve auto-generated key.");
             }
             return new BeerReview(
-              recID,
-              review.getAppearance(),
-              review.getAroma(),
-              review.getPalate(),
-              review.getTaste(),
-              review.getOverall(),
-              review.getCreated(),
-              review.getText(),
-              review.getUser(),
-              review.getBeer()
-            );
+                    recID,
+                    review.getAppearance(),
+                    review.getAroma(),
+                    review.getPalate(),
+                    review.getTaste(),
+                    review.getOverall(),
+                    review.getCreated(),
+                    review.getText(),
+                    review.getUser(),
+                    review.getBeer());
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } finally {
@@ -114,9 +110,8 @@ public class BeerReviewsDao {
         String lookUpSQL = "SELECT * FROM " + TABLE_NAME + " WHERE ReviewId=?;";
         ResultSet results = null;
         try (
-          Connection connection = connectionManager.getConnection();
-          PreparedStatement lookUpStatement = connection.prepareStatement(lookUpSQL)
-        ) {
+                Connection connection = connectionManager.getConnection();
+                PreparedStatement lookUpStatement = connection.prepareStatement(lookUpSQL)) {
             lookUpStatement.setInt(1, reviewId);
             results = lookUpStatement.executeQuery();
             if (results.next()) {
@@ -142,9 +137,8 @@ public class BeerReviewsDao {
         String lookUpSQL = "SELECT * FROM " + TABLE_NAME + " WHERE UserName=?;";
         ResultSet results = null;
         try (
-          Connection connection = connectionManager.getConnection();
-          PreparedStatement lookUpStatement = connection.prepareStatement(lookUpSQL)
-        ) {
+                Connection connection = connectionManager.getConnection();
+                PreparedStatement lookUpStatement = connection.prepareStatement(lookUpSQL)) {
             lookUpStatement.setString(1, userName);
             results = lookUpStatement.executeQuery();
 
@@ -168,9 +162,8 @@ public class BeerReviewsDao {
         ResultSet results = null;
 
         try (
-          Connection connection = connectionManager.getConnection();
-          PreparedStatement lookUpStatement = connection.prepareStatement(lookUpSQL)
-        ) {
+                Connection connection = connectionManager.getConnection();
+                PreparedStatement lookUpStatement = connection.prepareStatement(lookUpSQL)) {
             lookUpStatement.setInt(1, beerId);
             results = lookUpStatement.executeQuery();
             while (results.next()) {
@@ -190,9 +183,8 @@ public class BeerReviewsDao {
     public BeerReview delete(BeerReview review) {
         String deleteSQL = "DELETE FROM " + TABLE_NAME + " WHERE ReviewID=?";
         try (
-          Connection connection = connectionManager.getConnection();
-          PreparedStatement deleteStatement = connection.prepareStatement(deleteSQL)
-        ) {
+                Connection connection = connectionManager.getConnection();
+                PreparedStatement deleteStatement = connection.prepareStatement(deleteSQL)) {
             deleteStatement.setInt(1, review.getId());
             deleteStatement.executeUpdate();
             return null;
@@ -202,28 +194,27 @@ public class BeerReviewsDao {
     }
 
     public BeerReview findAverageReviewOf(Beer beer) {
-        String query = "SELECT beerid, AVG(appearance) as appearance, AVG(aroma) as aroma, AVG(palate) as palate, AVG(taste) as taste " +
-          "FROM " + TABLE_NAME + " WHERE beerid=? GROUP BY beerid;";
+        String query = "SELECT beerid, AVG(appearance) as appearance, AVG(aroma) as aroma, AVG(palate) as palate, AVG(taste) as taste "
+                +
+                "FROM " + TABLE_NAME + " WHERE beerid=? GROUP BY beerid;";
         ResultSet result = null;
         try (
-          Connection connection = connectionManager.getConnection();
-          PreparedStatement statement = connection.prepareStatement(query);
-          ) {
+                Connection connection = connectionManager.getConnection();
+                PreparedStatement statement = connection.prepareStatement(query);) {
             statement.setInt(1, beer.getId());
             result = statement.executeQuery();
             if (result.next()) {
                 BeerReview review = new BeerReview(
-                  null,
-                  result.getFloat("appearance"),
-                  result.getFloat("aroma"),
-                  result.getFloat("palate"),
-                  result.getFloat("taste"),
-                  0f,
-                  null,
-                  null,
-                  null,
-                  null
-                );
+                        null,
+                        result.getFloat("appearance"),
+                        result.getFloat("aroma"),
+                        result.getFloat("palate"),
+                        result.getFloat("taste"),
+                        0f,
+                        null,
+                        null,
+                        null,
+                        null);
                 return review;
             }
         } catch (SQLException e) {
@@ -236,18 +227,18 @@ public class BeerReviewsDao {
 
     public List<BeerReview> findSimilarReviews(BeerReview review, int limit) {
         List<BeerReview> reviews = new ArrayList<>();
-        String query = "SELECT beerid, AVG(appearance) as appearance, AVG(aroma) as aroma, AVG(palate) as palate, AVG(taste) as taste " +
-          "FROM " + TABLE_NAME + " " +
-          "WHERE (" +
-          "ABS(Appearance-?)<=1 AND ABS(Aroma-?)<=1 " +
-          "AND ABS(Palate-?)<=1 AND ABS(Taste-?)<=1) " +
-          "GROUP BY beerid " +
-          "LIMIT ?;";
+        String query = "SELECT beerid, AVG(appearance) as appearance, AVG(aroma) as aroma, AVG(palate) as palate, AVG(taste) as taste "
+                +
+                "FROM " + TABLE_NAME + " " +
+                "WHERE (" +
+                "ABS(Appearance-?)<=1 AND ABS(Aroma-?)<=1 " +
+                "AND ABS(Palate-?)<=1 AND ABS(Taste-?)<=1) " +
+                "GROUP BY beerid " +
+                "LIMIT ?;";
         ResultSet result = null;
         try (
-          Connection connection = connectionManager.getConnection();
-          PreparedStatement statement = connection.prepareStatement(query);
-        ) {
+                Connection connection = connectionManager.getConnection();
+                PreparedStatement statement = connection.prepareStatement(query);) {
             statement.setFloat(1, review.getAppearance());
             statement.setFloat(2, review.getAroma());
             statement.setFloat(3, review.getPalate());
@@ -256,17 +247,16 @@ public class BeerReviewsDao {
             result = statement.executeQuery();
             while (result.next()) {
                 reviews.add(new BeerReview(
-                  result.getInt("beerid"),
-                  result.getFloat("appearance"),
-                  result.getFloat("aroma"),
-                  result.getFloat("palate"),
-                  result.getFloat("taste"),
-                  0f,
-                  null,
-                  null,
-                  null,
-                  null
-                ));
+                        result.getInt("beerid"),
+                        result.getFloat("appearance"),
+                        result.getFloat("aroma"),
+                        result.getFloat("palate"),
+                        result.getFloat("taste"),
+                        0f,
+                        null,
+                        null,
+                        null,
+                        null));
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -275,15 +265,15 @@ public class BeerReviewsDao {
         }
         return reviews;
     }
-    
-    public List<String> getTopBeersCountsByIPA() {
+
+     public List<String> getTopBeersCountsByIPA() {
         List<String> beerNames = new ArrayList<>();
         String selectBeers =
-                "SELECT Beer.BeerName, COUNT(BeerReviews.ReviewId) AS review_count " +
-                "FROM Beer " +
-                "INNER JOIN BeerReviews ON Beer.BeerId = BeerReviews.BeerId " +
-                "WHERE Beer.Style LIKE '%IPA%' " +
-                "GROUP BY Beer.BeerId " +
+                "SELECT Beers.BeerName, COUNT(BeerReviews.ReviewId) AS review_count " +
+                "FROM Beers " +
+                "INNER JOIN BeerReviews ON Beers.BeerId = BeerReviews.BeerId " +
+                "WHERE Beers.Style LIKE '%IPA%' " +
+                "GROUP BY Beers.BeerId " +
                 "ORDER BY review_count DESC " +
                 "LIMIT 10;";
 
@@ -308,11 +298,11 @@ public class BeerReviewsDao {
     public List<String> getTopBeersCountsByAle() {
         List<String> beerNames = new ArrayList<>();
         String selectBeers =
-                "SELECT Beer.BeerName, COUNT(BeerReviews.ReviewId) AS review_count " +
-                "FROM Beer " +
-                "INNER JOIN BeerReviews ON Beer.BeerId = BeerReviews.BeerId " +
-                "WHERE Beer.Style LIKE '%Ale%' " +
-                "GROUP BY Beer.BeerId " +
+                "SELECT Beers.BeerName, COUNT(BeerReviews.ReviewId) AS review_count " +
+                "FROM Beers " +
+                "INNER JOIN BeerReviews ON Beers.BeerId = BeerReviews.BeerId " +
+                "WHERE Beers.Style LIKE '%Ale%' " +
+                "GROUP BY Beers.BeerId " +
                 "ORDER BY review_count DESC " +
                 "LIMIT 10;";
 
@@ -336,11 +326,11 @@ public class BeerReviewsDao {
     public List<String> getTopBeersByWinterReviews() {
         List<String> beers = new ArrayList<>();
         String selectBeers =
-                "SELECT Beer.BeerName, COUNT(BeerReviews.ReviewId) AS review_count " +
-                "FROM Beer " +
-                "INNER JOIN BeerReviews ON Beer.BeerId = BeerReviews.BeerId " +
+                "SELECT Beers.BeerName, COUNT(BeerReviews.ReviewId) AS review_count " +
+                "FROM Beers " +
+                "INNER JOIN BeerReviews ON Beers.BeerId = BeerReviews.BeerId " +
                 "WHERE MONTH(BeerReviews.Created) IN (12, 1, 2) " +
-                "GROUP BY Beer.BeerId " +
+                "GROUP BY Beers.BeerId " +
                 "ORDER BY review_count DESC " +
                 "LIMIT 10;";
 
@@ -361,11 +351,11 @@ public class BeerReviewsDao {
     public List<String> getTopBeersBySummerReviews() {
         List<String> beers = new ArrayList<>();
         String selectBeers =
-                "SELECT Beer.BeerName, COUNT(BeerReviews.ReviewId) AS review_count " +
-                "FROM Beer " +
-                "INNER JOIN BeerReviews ON Beer.BeerId = BeerReviews.BeerId " +
+                "SELECT Beers.BeerName, COUNT(BeerReviews.ReviewId) AS review_count " +
+                "FROM Beers " +
+                "INNER JOIN BeerReviews ON Beers.BeerId = BeerReviews.BeerId " +
                 "WHERE MONTH(BeerReviews.Created) IN (6, 7, 8) " +
-                "GROUP BY Beer.BeerId " +
+                "GROUP BY Beers.BeerId " +
                 "ORDER BY review_count DESC " +
                 "LIMIT 10;";
 
@@ -383,5 +373,79 @@ public class BeerReviewsDao {
         return beers;
     }
 
+    /**
+     * Get personalized beer recs from user preferences
+     * @return a list of 10 beers, each beer contains "BeerName", "Appearance", "Aroma", "Palate", "Taste"
+     */
+    public List<List<String>> getPersonalizedBeerRecommendations(int palate, int taste, int aroma, int appearance) {
 
+        List<List<String>> resultList = new ArrayList<>();
+        int palateInput = 5;
+        int tasteInput = 1;
+        int aromaInput = 8;
+        int appearanceInput = 9;
+
+        String query = "SELECT BeerReviews.BeerID, Beers.BeerName, count(*) AS count," +
+                " AVG(Appearance) AS appearance_avg, AVG(Aroma) AS aroma_avg," +
+                " AVG(Palate) AS palate_avg, AVG(Taste) AS taste_avg, AVG(Overall) AS overall_avg" +
+                " FROM BeerReviews INNER JOIN Beers ON BeerReviews.BeerID = Beers.BeerID " +
+                "WHERE (ABS(Appearance - " + appearanceInput + ") <= 2 AND ABS(Aroma - " + aromaInput + ") <= 2 " +
+                "AND ABS(Palate - " + palateInput + ") <= 2 AND ABS(Taste - " + tasteInput + ") <= 2) " +
+                "GROUP BY Beers.BeerName, BeerReviews.BeerID " +
+                "ORDER BY count DESC, overall_avg DESC LIMIT 10;";
+
+        ResultSet result = null;
+        try (
+                Connection connection = connectionManager.getConnection();
+                PreparedStatement statement = connection.prepareStatement(query);) {
+
+            result = statement.executeQuery();
+            while (result.next()) {
+                List<String> tempList = new ArrayList<>();
+                tempList.add(result.getString("BeerName"));
+                tempList.add(result.getInt("appearance_avg") + "");
+                tempList.add(result.getInt("aroma_avg") + "");
+                tempList.add(result.getInt("palate_avg") + "");
+                tempList.add(result.getInt("taste_avg") + "");
+
+                resultList.add(tempList);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            safeCloseResultSet(result);
+        }
+        return resultList;
+    }
+
+    
+    
+
+    public List<String> getTopBeersCountsByLager() {
+        List<String> beerNames = new ArrayList<>();
+        String selectBeers =
+                "SELECT Beers.BeerName, COUNT(BeerReviews.ReviewId) AS review_count " +
+                "FROM Beers " +
+                "INNER JOIN BeerReviews ON Beers.BeerId = BeerReviews.BeerId " +
+                "WHERE Beers.Style LIKE '%lager%' " +
+                "GROUP BY Beers.BeerId " +
+                "ORDER BY review_count DESC " +
+                "LIMIT 10;";
+
+        ResultSet resultSet = null;
+        try (Connection connection = connectionManager.getConnection();
+             PreparedStatement selectStmt = connection.prepareStatement(selectBeers)) {
+            resultSet = selectStmt.executeQuery();
+
+            while (resultSet.next()) {
+                beerNames.add(resultSet.getString("BeerName"));
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            safeCloseResultSet(resultSet);
+        }
+
+        return beerNames;
+    }
 }
